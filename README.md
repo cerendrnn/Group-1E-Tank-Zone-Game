@@ -16,6 +16,11 @@ https://diep.io/
 * Hakan Türkmenoğlu
 * Mert Sezer
 
+# Meeting Hours
+
+Saturday: 13.00-15.00
+Sunday: 14.00-16.00
+
 
 
 
