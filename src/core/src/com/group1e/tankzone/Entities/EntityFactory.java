@@ -9,7 +9,7 @@ public class EntityFactory {
 
     public static void createTank(World world, String faction, float pos_x, float pos_y, float velocity) {
         TankBody tankBody = new TankBody(faction, pos_x, pos_y, velocity);
-        TankBarrel tankBarrel = new TankBarrel(tankBody, faction);
+        TankBarrel tankBarrel = new TankBarrel(tankBody);
 
         world.getEntities().add(tankBody);
         world.getEntities().add(tankBarrel);
@@ -17,7 +17,7 @@ public class EntityFactory {
 
     public static void createPlayer(World world, String faction, float pos_x, float pos_y, float velocity) {
         TankBody tankBody = new TankBody(faction, pos_x, pos_y, velocity);
-        TankBarrel tankBarrel = new TankBarrel(tankBody, faction);
+        TankBarrel tankBarrel = new TankBarrel(tankBody);
 
         tankBody.addComponent(new PlayerComponent(PlayerComponent.Type.STEERABLE));
         tankBarrel.addComponent(new PlayerComponent(PlayerComponent.Type.ROTATABLE));

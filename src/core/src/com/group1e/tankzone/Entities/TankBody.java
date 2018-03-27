@@ -2,10 +2,7 @@ package com.group1e.tankzone.Entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.group1e.tankzone.Components.AngleComponent;
-import com.group1e.tankzone.Components.GraphicsComponent;
-import com.group1e.tankzone.Components.PositionComponent;
-import com.group1e.tankzone.Components.VelocityComponent;
+import com.group1e.tankzone.Components.*;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 
@@ -16,5 +13,6 @@ public class TankBody extends Entity {
         this.addComponent(new PositionComponent(pos_x, pos_y));
         this.addComponent(new VelocityComponent(velocity));
         this.addComponent(new AngleComponent(random(0, 360)));
+        this.addComponent(new FactionComponent(faction));
     }
 }
