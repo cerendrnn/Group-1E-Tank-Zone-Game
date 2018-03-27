@@ -6,6 +6,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.group1e.tankzone.Components.*;
 import com.group1e.tankzone.Entities.Entity;
+import com.group1e.tankzone.Entities.EntityFactory;
+import com.group1e.tankzone.Entities.TankBarrel;
 import com.group1e.tankzone.Managers.World;
 import com.group1e.tankzone.Utils.Util;
 
@@ -13,6 +15,7 @@ import com.group1e.tankzone.Utils.Util;
 public class InputSystem implements EntitySystem {
     private static final float VELOCITY = 100;
     private static final float ANGULAR_VELOCITY = 100;
+    private static final float BULLET_VELOCITY = 100;
 
     @Override
     public void update(World world) {
@@ -56,6 +59,11 @@ public class InputSystem implements EntitySystem {
                     float target_y = targetComponent.targetPosition.y;
 
                     angleComponent.angle = Util.getAngleBetweenTwoPoints(origin_x, origin_y, target_x, target_y);
+
+                    if (Gdx.input.justTouched()) {
+                        EntityFactory.createBullet(world, (TankBarrel)entity, BULLET_VELOCITY);
+                    }
+
                     break;
             }
         }

@@ -26,4 +26,11 @@ public class EntityFactory {
         world.getEntities().add(tankBarrel);
 
     }
+
+    public static void createBullet(World world, TankBarrel tankBarrel, float velocity) {
+        Bullet bullet = new Bullet(tankBarrel, velocity);
+
+        world.getEntities().add(bullet);
+    }
+
 }
