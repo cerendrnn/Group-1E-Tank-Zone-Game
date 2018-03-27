@@ -14,5 +14,6 @@ public class TankBody extends Entity {
         this.addComponent(new VelocityComponent(velocity));
         this.addComponent(new AngleComponent(random(0, 360)));
         this.addComponent(new FactionComponent(faction));
+        this.addComponent(new MassComponent(0.01f));
     }
 }
