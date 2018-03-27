@@ -22,10 +22,10 @@ public class GraphicsSystem implements EntitySystem {
         batch.begin();
 
         for (Entity entity : world.getEntities()) {
-            GraphicsComponent graphicsComponent = (GraphicsComponent)entity.getComponent(GraphicsComponent.class);
-            PositionComponent positionComponent = (PositionComponent)entity.getComponent(PositionComponent.class);
-            TargetComponent targetComponent = (TargetComponent)entity.getComponent(TargetComponent.class);
-            AngleComponent angleComponent = (AngleComponent)entity.getComponent(AngleComponent.class);
+            GraphicsComponent graphicsComponent = entity.getComponent(GraphicsComponent.class);
+            PositionComponent positionComponent = entity.getComponent(PositionComponent.class);
+            TargetComponent targetComponent = entity.getComponent(TargetComponent.class);
+            AngleComponent angleComponent = entity.getComponent(AngleComponent.class);
 
             if (graphicsComponent == null)
                 continue;

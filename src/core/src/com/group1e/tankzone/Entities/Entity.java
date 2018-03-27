@@ -6,8 +6,8 @@ import com.group1e.tankzone.Components.Component;
 public abstract class Entity {
     private ObjectMap<Class, Component> components = new ObjectMap<Class, Component>();
 
-    public Component getComponent(Class cls) {
-        return components.get(cls);
+    public <T extends Component> T getComponent(Class<T> cls) {
+        return (T) components.get(cls);
     }
 
     public void addComponent(Component component) {

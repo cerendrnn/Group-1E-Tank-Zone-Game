@@ -13,9 +13,9 @@ public class MovementSystem implements EntitySystem {
     @Override
     public void update(World world) {
         for (Entity entity : world.getEntities()) {
-            PositionComponent positionComponent = (PositionComponent)entity.getComponent(PositionComponent.class);
-            VelocityComponent velocityComponent = (VelocityComponent)entity.getComponent(VelocityComponent.class);
-            AngleComponent angleComponent = (AngleComponent)entity.getComponent(AngleComponent.class);
+            PositionComponent positionComponent = entity.getComponent(PositionComponent.class);
+            VelocityComponent velocityComponent = entity.getComponent(VelocityComponent.class);
+            AngleComponent angleComponent = entity.getComponent(AngleComponent.class);
 
             if (positionComponent == null || angleComponent == null || velocityComponent == null)
                 continue;

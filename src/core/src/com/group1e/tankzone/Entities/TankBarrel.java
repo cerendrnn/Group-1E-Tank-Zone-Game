@@ -11,7 +11,7 @@ public class TankBarrel extends Entity {
 
         Texture texture = new Texture("tank" + faction + "_barrel3_outline.png");
         this.addComponent(new GraphicsComponent(texture));
-        this.addComponent(new TargetComponent((PositionComponent)tankBody.getComponent(PositionComponent.class)));
+        this.addComponent(new TargetComponent(tankBody.getComponent(PositionComponent.class)));
         this.addComponent(new AngleComponent(random(0, 360)));
     }
 }

@@ -17,10 +17,10 @@ public class InputSystem implements EntitySystem {
     @Override
     public void update(World world) {
         for (Entity entity : world.getEntities()) {
-            PlayerComponent playerComponent = (PlayerComponent)entity.getComponent(PlayerComponent.class);
-            AngleComponent angleComponent = (AngleComponent)entity.getComponent(AngleComponent.class);
-            VelocityComponent velocityComponent = (VelocityComponent)entity.getComponent(VelocityComponent.class);
-            TargetComponent targetComponent = (TargetComponent)entity.getComponent(TargetComponent.class);
+            PlayerComponent playerComponent = entity.getComponent(PlayerComponent.class);
+            AngleComponent angleComponent = entity.getComponent(AngleComponent.class);
+            VelocityComponent velocityComponent = entity.getComponent(VelocityComponent.class);
+            TargetComponent targetComponent = entity.getComponent(TargetComponent.class);
 
             if (playerComponent == null || angleComponent == null)
                 continue;
