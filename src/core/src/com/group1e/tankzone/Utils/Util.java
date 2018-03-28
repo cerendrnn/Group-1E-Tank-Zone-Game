@@ -1,6 +1,7 @@
 package com.group1e.tankzone.Utils;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 
 public class Util {
     public static float getAngleBetweenTwoPoints(float x1, float y1, float x2, float y2) {
@@ -21,5 +22,13 @@ public class Util {
 
     public static float getDistanceBetweenTwoPoints(float x1, float y1, float x2, float y2) {
         return (float) Math.sqrt(getDistance2BetweenTwoPoints(x1, y1, x2, y2));
+    }
+
+    public static Vector2 createVector(float length, float angle) {
+        Vector2 vec = new Vector2(1, 0); // unit vector
+        vec.setLength(length);
+        vec.setAngle(angle);
+
+        return vec;
     }
 }

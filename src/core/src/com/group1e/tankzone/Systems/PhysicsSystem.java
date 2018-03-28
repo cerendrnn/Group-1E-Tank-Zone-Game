@@ -51,13 +51,8 @@ public class PhysicsSystem implements EntitySystem {
                 float acceleration = GRAVITATIONAL_CONSTANT * massComponent1.mass * Gdx.graphics.getDeltaTime();
                 acceleration /= distance2;
 
-                Vector2 accVector = new Vector2(1, 0); // unit vector
-                accVector.setLength(acceleration);
-                accVector.setAngle(angle);
-
-                Vector2 velVector = new Vector2(1, 0);
-                velVector.setLength(velocityComponent.velocity);
-                velVector.setAngle(angleComponent.angle);
+                Vector2 accVector = Util.createVector(acceleration, angle);
+                Vector2 velVector = Util.createVector(velocityComponent.velocity, angleComponent.angle);
 
                 Vector2 newVelVector = velVector.sub(accVector);
 
