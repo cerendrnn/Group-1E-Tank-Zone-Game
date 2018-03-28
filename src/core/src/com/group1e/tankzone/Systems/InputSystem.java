@@ -60,9 +60,11 @@ public class InputSystem implements EntitySystem {
                     float target_y = targetPos.y;
 
                     angleComponent.angle = Util.getAngleBetweenTwoPoints(origin_x, origin_y, target_x, target_y);
+                    TankBarrel barrel = (TankBarrel)entity;
 
-                    if (Gdx.input.justTouched()) {
-                        EntityFactory.createBullet(world, (TankBarrel)entity, BULLET_VELOCITY);
+
+                    if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && barrel.canShoot()) {
+                        EntityFactory.createBullet(world, barrel, BULLET_VELOCITY);
                     }
 
                     break;
