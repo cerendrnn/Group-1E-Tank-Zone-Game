@@ -6,6 +6,9 @@ import com.group1e.tankzone.Entities.Blackhole;
 import com.group1e.tankzone.Entities.Entity;
 import com.group1e.tankzone.Entities.EntityFactory;
 import com.group1e.tankzone.Systems.*;
+import com.group1e.tankzone.Systems.AI.MoveStraightStrategy;
+import com.group1e.tankzone.Systems.AI.ShootStraightStategy;
+import com.group1e.tankzone.Systems.AI.TargetClosestStrategy;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 
@@ -41,6 +44,7 @@ public class GameManager extends ApplicationAdapter {
         systems.add(new PhysicsSystem());
         systems.add(new CollisionSystem());
         systems.add(new DeathSystem());
+        systems.add(new AISystem(new TargetClosestStrategy(), new ShootStraightStategy(), new MoveStraightStrategy()));
 	}
 
 	@Override
