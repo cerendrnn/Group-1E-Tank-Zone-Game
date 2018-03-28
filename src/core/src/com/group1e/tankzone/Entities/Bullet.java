@@ -21,10 +21,16 @@ public class Bullet extends Entity {
         Entity target = tankBarrel.getComponent(TargetComponent.class).target;
         PositionComponent pos = target.getComponent(PositionComponent.class);
 
+        Texture barrelTexture = tankBarrel.getComponent(GraphicsComponent.class).texture;
+        float barrelLength = barrelTexture.getHeight();
+
+        Vector2 addedPosition = Util.createVector(barrelLength, angle);
+        Vector2 newPos = new Vector2(pos.x, pos.y).add(addedPosition);
+
         this.addComponent(new GraphicsComponent(texture));
         this.addComponent(new AngleComponent(angle));
         this.addComponent(new VelocityComponent(velocity));
-        this.addComponent(new PositionComponent(pos.x, pos.y));
+        this.addComponent(new PositionComponent(newPos.x, newPos.y));
         this.addComponent(new DamageComponent(50));
         this.addComponent(new SizeComponent(size));
 
