@@ -1,9 +1,11 @@
 package com.group1e.tankzone.Components;
 
-public class TargetComponent implements Component {
-    public PositionComponent targetPosition;
+import com.group1e.tankzone.Entities.Entity;
 
-    public TargetComponent(PositionComponent targetPosition) {
-        this.targetPosition = targetPosition;
+public class TargetComponent implements Component {
+    public Entity target;
+
+    public TargetComponent(Entity target) {
+        this.target = target;
     }
 }

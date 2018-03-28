@@ -10,6 +10,7 @@ import com.group1e.tankzone.Components.PositionComponent;
 import com.group1e.tankzone.Components.TargetComponent;
 import com.group1e.tankzone.Entities.Entity;
 import com.group1e.tankzone.Managers.World;
+import javafx.geometry.Pos;
 
 public class GraphicsSystem implements EntitySystem {
     private SpriteBatch batch = new SpriteBatch();
@@ -38,8 +39,9 @@ public class GraphicsSystem implements EntitySystem {
                 x = positionComponent.x;
                 y = positionComponent.y;
             } else if (targetComponent != null) {
-                x = targetComponent.targetPosition.x;
-                y = targetComponent.targetPosition.y;
+                PositionComponent targetPos = targetComponent.target.getComponent(PositionComponent.class);
+                x = targetPos.x;
+                y = targetPos.y;
             } else {
                 throw new RuntimeException("GraphicsSystem: Could not get position of the sprite!");
             }

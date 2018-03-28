@@ -13,7 +13,8 @@ public class Bullet extends Entity {
         Texture texture = new Texture("bullet" + faction + "3_outline.png");
 
         float angle = tankBarrel.getComponent(AngleComponent.class).angle;
-        PositionComponent pos = tankBarrel.getComponent(TargetComponent.class).targetPosition;
+        Entity target = tankBarrel.getComponent(TargetComponent.class).target;
+        PositionComponent pos = target.getComponent(PositionComponent.class);
 
         this.addComponent(new GraphicsComponent(texture));
         this.addComponent(new AngleComponent(angle));

@@ -55,8 +55,9 @@ public class InputSystem implements EntitySystem {
                     // We have to convert it to the game's version by subtracting it from the height
                     float origin_y = Gdx.graphics.getHeight() - Gdx.input.getY();
 
-                    float target_x = targetComponent.targetPosition.x;
-                    float target_y = targetComponent.targetPosition.y;
+                    PositionComponent targetPos = targetComponent.target.getComponent(PositionComponent.class);
+                    float target_x = targetPos.x;
+                    float target_y = targetPos.y;
 
                     angleComponent.angle = Util.getAngleBetweenTwoPoints(origin_x, origin_y, target_x, target_y);
 
