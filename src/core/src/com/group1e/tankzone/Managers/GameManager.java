@@ -33,7 +33,7 @@ public class GameManager extends ApplicationAdapter {
                 0
         );
 
-	    world.getEntities().add(new Blackhole(100, 100, 1000));
+	    //world.getEntities().add(new Blackhole(100, 100, 1000));
 
         systems.add(new GraphicsSystem());
         systems.add(new MovementSystem());
