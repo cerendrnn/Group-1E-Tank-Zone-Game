@@ -18,7 +18,7 @@ public class GameManager extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-	    for (int i = 0; i < 10; ++i) {
+	    for (int i = 0; i < 1; ++i) {
             EntityFactory.createTank(
                     world,
                     "red",
@@ -31,8 +31,8 @@ public class GameManager extends ApplicationAdapter {
         EntityFactory.createPlayer(
                 world,
                 "blue",
-                200,
-                100,
+                400,
+                400,
                 0
         );
 
