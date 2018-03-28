@@ -8,9 +8,9 @@ import static com.badlogic.gdx.math.MathUtils.random;
 public class TankBarrel extends Entity {
     public TankBarrel(TankBody tankBody) {
         String faction = tankBody.getComponent(FactionComponent.class).color;
-        faction = Character.toUpperCase(faction.charAt(0)) + faction.substring(1);
+        String factionName = Character.toUpperCase(faction.charAt(0)) + faction.substring(1);
 
-        Texture texture = new Texture("tank" + faction + "_barrel3_outline.png");
+        Texture texture = new Texture("tank" + factionName + "_barrel3_outline.png");
         this.addComponent(new GraphicsComponent(texture));
         this.addComponent(new TargetComponent(tankBody));
         this.addComponent(new AngleComponent(random(0, 360)));
