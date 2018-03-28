@@ -15,7 +15,7 @@ import com.group1e.tankzone.Utils.Util;
 public class InputSystem implements EntitySystem {
     private static final float VELOCITY = 100;
     private static final float ANGULAR_VELOCITY = 100;
-    private static final float BULLET_VELOCITY = 100;
+    private static final float BULLET_VELOCITY = 500;
 
     @Override
     public void update(World world) {
