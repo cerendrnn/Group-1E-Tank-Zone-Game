@@ -39,6 +39,8 @@ public class GameManager extends ApplicationAdapter {
         systems.add(new MovementSystem());
         systems.add(new InputSystem());
         systems.add(new PhysicsSystem());
+        systems.add(new CollisionSystem());
+        systems.add(new DeathSystem());
 	}
 
 	@Override
