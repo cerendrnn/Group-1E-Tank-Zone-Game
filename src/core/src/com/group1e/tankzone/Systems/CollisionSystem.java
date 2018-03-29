@@ -35,7 +35,8 @@ public class CollisionSystem implements EntitySystem {
                 float distance = Util.getDistanceBetweenTwoPoints(pos1.x, pos1.y, pos2.x, pos2.y);
 
                 if (distance <= size1.size + size2.size) {
-                    world.getEntities().removeValue(e1, true);
+                    if (damage1.disposable)
+                        world.getEntities().removeValue(e1, true);
 
                     health2.health -= damage1.damage;
                 }

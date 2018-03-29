@@ -10,5 +10,7 @@ public class Blackhole extends Entity {
         this.addComponent(new PositionComponent(pos_x, pos_y));
         this.addComponent(new MassComponent(mass));
         this.addComponent(new PowerupComponent(PowerupComponent.Type.BLACK_HOLE));
+        this.addComponent(new SizeComponent(10));
+        this.addComponent(new DamageComponent(1000, false));
     }
 }

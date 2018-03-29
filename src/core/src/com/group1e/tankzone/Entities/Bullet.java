@@ -31,7 +31,7 @@ public class Bullet extends Entity {
         this.addComponent(new AngleComponent(angle));
         this.addComponent(new VelocityComponent(velocity));
         this.addComponent(new PositionComponent(newPos.x, newPos.y));
-        this.addComponent(new DamageComponent(50));
+        this.addComponent(new DamageComponent(50, true));
         this.addComponent(new SizeComponent(size));
 
     }
