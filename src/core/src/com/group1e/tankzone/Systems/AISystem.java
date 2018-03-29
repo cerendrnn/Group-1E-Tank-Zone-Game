@@ -39,9 +39,10 @@ public class AISystem implements EntitySystem {
             String faction = ai.getComponent(FactionComponent.class).color;
 
             Array<TankBody> enemies = getEnemiesFor(world, faction);
+            Array<TankBody> friendlies = getFriendliesFor(world, aiBody, faction);
             TankBody target = aiTargetStrategy.decideEnemyToAttack(aiBody, enemies);
 
-            aiShootStrategy.shoot(world, aiBarrel, target);
+            aiShootStrategy.shoot(world, aiBarrel, target, friendlies);
 
             aiMovementStrategy.moveTo(world, aiBody, target);
         }
@@ -67,5 +68,25 @@ public class AISystem implements EntitySystem {
         }
 
         return enemies;
+    }
+
+    private Array<TankBody> getFriendliesFor(World world, TankBody ai, String faction) {
+        Array<TankBody> friendlies = new Array<TankBody>();
+
+        for (Entity e : world.getEntities()) {
+            if (e == ai)
+                continue; // Exclude itself
+
+            FactionComponent factionComponent = e.getComponent(FactionComponent.class);
+            PositionComponent positionComponent = e.getComponent(PositionComponent.class);
+
+            if (factionComponent == null || positionComponent == null)
+                continue;
+
+            if (factionComponent.color.equals(faction))
+                friendlies.add((TankBody) e);
+        }
+
+        return friendlies;
     }
 }
