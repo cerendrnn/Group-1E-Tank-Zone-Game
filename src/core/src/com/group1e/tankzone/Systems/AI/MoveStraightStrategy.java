@@ -15,7 +15,7 @@ public class MoveStraightStrategy implements AIMovementStrategy {
     private static final float ANGULAR_VELOCITY = 100;
 
     @Override
-    public void moveTo(World world, TankBody ai, TankBody enemy){
+    public void moveTo(TankBody ai, TankBody enemy){
         PositionComponent aiPos = ai.getComponent(PositionComponent.class);
         PositionComponent enemyPos = enemy.getComponent(PositionComponent.class);
 

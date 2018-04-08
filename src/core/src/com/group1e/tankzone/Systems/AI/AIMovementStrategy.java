@@ -5,5 +5,5 @@ import com.group1e.tankzone.Entities.TankBody;
 import com.group1e.tankzone.Managers.World;
 
 public interface AIMovementStrategy {
-    void moveTo(World world, TankBody ai, TankBody enemy);
+    void moveTo(TankBody ai, TankBody enemy);
 }

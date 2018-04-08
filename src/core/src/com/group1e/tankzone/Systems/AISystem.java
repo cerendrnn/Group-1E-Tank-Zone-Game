@@ -1,6 +1,7 @@
 package com.group1e.tankzone.Systems;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.group1e.tankzone.Components.FactionComponent;
 import com.group1e.tankzone.Components.PlayerComponent;
 import com.group1e.tankzone.Components.PositionComponent;
@@ -13,80 +14,82 @@ import com.group1e.tankzone.Systems.AI.AIMovementStrategy;
 import com.group1e.tankzone.Systems.AI.AIShootStrategy;
 import com.group1e.tankzone.Systems.AI.AITargetStrategy;
 
-public class AISystem implements EntitySystem {
-    AITargetStrategy aiTargetStrategy;
-    AIShootStrategy aiShootStrategy;
-    AIMovementStrategy aiMovementStrategy;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 
-    public AISystem(AITargetStrategy aiTargetStrategy, AIShootStrategy aiShootStrategy, AIMovementStrategy aiMovementStrategy) {
+public class AISystem implements EntitySystem {
+    private AITargetStrategy aiTargetStrategy;
+    private AIShootStrategy aiShootStrategy;
+    private AIMovementStrategy aiMovementStrategy;
+
+    private Entity player = null;
+    private ObjectMap<String, Array<TankBarrel>> friendlyMap = new ObjectMap<String, Array<TankBarrel>>();
+    private ObjectMap<String, Array<TankBody>> enemyMap = new ObjectMap<String, Array<TankBody>>();
+
+    public AISystem(String[] factions, AITargetStrategy aiTargetStrategy, AIShootStrategy aiShootStrategy, AIMovementStrategy aiMovementStrategy) {
         this.aiTargetStrategy = aiTargetStrategy;
         this.aiShootStrategy = aiShootStrategy;
         this.aiMovementStrategy = aiMovementStrategy;
-    }
 
-    @Override
-    public void update(World world) {
-        for (int i = 0; i < world.getEntities().size; ++i) {
-            Entity ai = world.getEntities().get(i);
-            PlayerComponent playerComponent = ai.getComponent(PlayerComponent.class);
-
-            if (!(ai instanceof TankBarrel) || playerComponent != null)
-                continue;
-
-            TankBarrel aiBarrel = (TankBarrel) ai;
-            TankBody aiBody = (TankBody) ai.getComponent(TargetComponent.class).target;
-
-            String faction = ai.getComponent(FactionComponent.class).color;
-
-            Array<TankBody> enemies = getEnemiesFor(world, faction);
-            Array<TankBody> friendlies = getFriendliesFor(world, aiBody, faction);
-            TankBody target = aiTargetStrategy.decideEnemyToAttack(aiBody, enemies);
-
-            aiShootStrategy.shoot(world, aiBarrel, target, friendlies);
-
-            aiMovementStrategy.moveTo(world, aiBody, target);
+        for (String faction : factions) {
+            friendlyMap.put(faction, new Array<TankBarrel>());
+            enemyMap.put(faction, new Array<TankBody>());
         }
     }
 
     @Override
-    public void dispose() {
+    public void entityUpdated(Entity entity, boolean added) {
+        if (!(entity instanceof TankBarrel))
+            return;
 
-    }
-
-    private Array<TankBody> getEnemiesFor(World world, String faction) {
-        Array<TankBody> enemies = new Array<TankBody>();
-
-        for (Entity e : world.getEntities()) {
-            FactionComponent factionComponent = e.getComponent(FactionComponent.class);
-            PositionComponent positionComponent = e.getComponent(PositionComponent.class);
-
-            if (factionComponent == null || positionComponent == null)
-                continue;
-
-            if (!factionComponent.color.equals(faction))
-                enemies.add((TankBody) e);
+        PlayerComponent playerComponent = entity.getComponent(PlayerComponent.class);
+        if (playerComponent != null) {
+            player = entity;
         }
 
-        return enemies;
-    }
-
-    private Array<TankBody> getFriendliesFor(World world, TankBody ai, String faction) {
-        Array<TankBody> friendlies = new Array<TankBody>();
-
-        for (Entity e : world.getEntities()) {
-            if (e == ai)
-                continue; // Exclude itself
-
-            FactionComponent factionComponent = e.getComponent(FactionComponent.class);
-            PositionComponent positionComponent = e.getComponent(PositionComponent.class);
-
-            if (factionComponent == null || positionComponent == null)
-                continue;
-
-            if (factionComponent.color.equals(faction))
-                friendlies.add((TankBody) e);
+        FactionComponent factionComponent = entity.getComponent(FactionComponent.class);
+        if (factionComponent == null) {
+            return;
         }
 
-        return friendlies;
+        String faction = factionComponent.color;
+
+        Array<TankBarrel> friendlyArray = friendlyMap.get(faction);
+        if (added) friendlyArray.add((TankBarrel) entity);
+        else       friendlyArray.removeValue((TankBarrel) entity, true);
+
+        for (String enemyFaction : friendlyMap.keys()) {
+            if (enemyFaction.equals(faction))
+                continue;
+
+            Array<TankBody> enemyArray = enemyMap.get(enemyFaction);
+            TankBody entityBody = (TankBody) entity.getComponent(TargetComponent.class).target;
+
+            if (added) enemyArray.add(entityBody);
+            else       enemyArray.removeValue(entityBody, true);
+        }
+    }
+
+    @Override
+    public void update() {
+        for (ObjectMap.Entry<String, Array<TankBarrel>> entry : friendlyMap) {
+            String aiFaction = entry.key;
+            Array<TankBarrel> aiList = entry.value;
+
+            for (int i = 0; i < aiList.size; ++i) {
+                TankBarrel aiBarrel = aiList.get(i);
+
+                if (aiBarrel == player) continue;
+
+                TankBody aiBody = (TankBody) aiBarrel.getComponent(TargetComponent.class).target;
+                Array<TankBody> aiEnemyList = enemyMap.get(aiFaction);
+
+                TankBody target = aiTargetStrategy.decideEnemyToAttack(aiBody, aiEnemyList);
+                aiShootStrategy.shoot(aiBarrel, target, aiList);
+
+                aiMovementStrategy.moveTo(aiBody, target);
+            }
+        }
     }
 }

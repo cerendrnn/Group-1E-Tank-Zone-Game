@@ -2,8 +2,10 @@ package com.group1e.tankzone.Systems;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.group1e.tankzone.Components.AngleComponent;
 import com.group1e.tankzone.Components.GraphicsComponent;
 import com.group1e.tankzone.Components.PositionComponent;
@@ -14,22 +16,53 @@ import javafx.geometry.Pos;
 
 public class GraphicsSystem implements EntitySystem {
     private SpriteBatch batch = new SpriteBatch();
+    private OrthographicCamera camera = new OrthographicCamera(1920, 1080);
+    Texture empty = new Texture("green.png");
+    Texture wall = new Texture("red.png");
+    Texture grass = new Texture("Map/grass/mapTile_022.png");
+    Texture dirt = new Texture("Map/dirt/mapTile_082.png");
+
+    private Array<Entity> entitiesWithTexture = new Array<Entity>();
 
     @Override
-    public void update(World world) {
+    public void entityUpdated(Entity entity, boolean added) {
+        GraphicsComponent graphicsComponent = entity.getComponent(GraphicsComponent.class);
+        if (graphicsComponent != null) {
+            if (added) entitiesWithTexture.add(entity);
+            else       entitiesWithTexture.removeValue(entity, true);
+        }
+    }
+
+    @Override
+    public void update() {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        PositionComponent camPos = World.getInstance().getCameraTarget();
+
+        camera.position.set(camPos.x, camPos.y, 0);
+        camera.update();
+
+        batch.setProjectionMatrix(camera.combined);
+
         batch.begin();
 
-        for (Entity entity : world.getEntities()) {
+        int map[][] = World.getInstance().getMap();
+        int width = map.length;
+        int height = map[0].length;
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                Texture toDraw = map[x][y] == 0 ? grass : dirt;
+                batch.draw(toDraw, x * 16, y * 16);
+            }
+        }
+
+        for (Entity entity : entitiesWithTexture) {
             GraphicsComponent graphicsComponent = entity.getComponent(GraphicsComponent.class);
             PositionComponent positionComponent = entity.getComponent(PositionComponent.class);
             TargetComponent targetComponent = entity.getComponent(TargetComponent.class);
             AngleComponent angleComponent = entity.getComponent(AngleComponent.class);
-
-            if (graphicsComponent == null)
-                continue;
 
             Texture texture = graphicsComponent.texture;
 
@@ -75,8 +108,4 @@ public class GraphicsSystem implements EntitySystem {
         batch.end();
     }
 
-    @Override
-    public void dispose() {
-        batch.dispose();
-    }
 }

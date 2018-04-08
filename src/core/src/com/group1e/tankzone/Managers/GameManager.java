@@ -1,7 +1,7 @@
 package com.group1e.tankzone.Managers;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.utils.Array;
+import com.group1e.tankzone.Components.PositionComponent;
 import com.group1e.tankzone.Entities.Blackhole;
 import com.group1e.tankzone.Entities.Entity;
 import com.group1e.tankzone.Entities.EntityFactory;
@@ -13,51 +13,60 @@ import com.group1e.tankzone.Systems.AI.TargetClosestStrategy;
 import static com.badlogic.gdx.math.MathUtils.random;
 
 public class GameManager extends ApplicationAdapter {
-    private Array<EntitySystem> systems = new Array<EntitySystem>();
-    private World world = new World();
-
 	@Override
 	public void create () {
-	    for (int i = 0; i < 1; ++i) {
-            EntityFactory.createTank(
-                    world,
-                    "red",
-                    random(10, 20) * 10,
-                    random(10, 20) * 10,
-                    random(-10, 10)
-            );
-        }
+	    Engine engine = new Engine();
+	    World.getInstance().setEngine(engine);
+
+        engine.addSystem(new GraphicsSystem());
+        engine.addSystem(new MovementSystem());
+        engine.addSystem(new InputSystem());
+        engine.addSystem(new GravitationalSystem());
+        engine.addSystem(new CollisionSystem());
+        engine.addSystem(new DeathSystem());
+        String[] factions = new String[] {"red", "blue"};
+        engine.addSystem(new AISystem(factions, new TargetClosestStrategy(), new ShootStraightStategy(), new MoveStraightStrategy()));
 
         EntityFactory.createPlayer(
-                world,
                 "blue",
-                400,
+                600,
                 400,
                 0
         );
 
-	    //world.getEntities().add(new Blackhole(100, 100, 1000));
+        World world = World.getInstance();
 
-        systems.add(new GraphicsSystem());
-        systems.add(new MovementSystem());
-        systems.add(new InputSystem());
-        systems.add(new PhysicsSystem());
-        systems.add(new CollisionSystem());
-        systems.add(new DeathSystem());
-        systems.add(new AISystem(new TargetClosestStrategy(), new ShootStraightStategy(), new MoveStraightStrategy()));
+        world.setCameraTarget(engine.getEntity(0).getComponent(PositionComponent.class));
+        MapGenerator mapGenerator = new MapGenerator();
+        world.setMap(mapGenerator.getMap());
+
+        for (Entity e : mapGenerator.getGeneratedObstacles()) {
+            engine.addEntity(e);
+        }
+
+	    for (int i = 0; i < 10; ++i) {
+            EntityFactory.createTank(
+                    "red",
+                    random(0, 20) * 20,
+                    random(0, 20) * 20,
+                    random(-20, 20)
+            );
+        }
+
+	    //engine.addEntity(new Blackhole(300, 300, 10000));
 	}
 
 	@Override
 	public void render () {
-		for (EntitySystem entitySystem : systems) {
-		    entitySystem.update(world);
-        }
+		World.getInstance().getEngine().update();
 	}
 	
 	@Override
 	public void dispose () {
-        for (EntitySystem entitySystem : systems) {
-	        entitySystem.dispose();
-        }
+
 	}
+
+	public void addEntity(Entity e) {
+
+    }
 }

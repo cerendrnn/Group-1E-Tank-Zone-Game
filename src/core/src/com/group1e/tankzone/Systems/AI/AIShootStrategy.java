@@ -7,5 +7,5 @@ import com.group1e.tankzone.Entities.TankBody;
 import com.group1e.tankzone.Managers.World;
 
 public interface AIShootStrategy {
-    void shoot(World world, TankBarrel ai, TankBody enemy, Array<TankBody> friendlies);
+    void shoot(TankBarrel ai, TankBody enemy, Array<TankBarrel> friendlies);
 }

@@ -91,7 +91,7 @@ f = E - C ( Vector from center sphere to ray start )
     }
 
     @Override
-    public void shoot(World world, TankBarrel ai, TankBody enemy, Array<TankBody> friendlies) {
+    public void shoot(TankBarrel ai, TankBody enemy, Array<TankBarrel> friendlies) {
         if (!ai.canShoot())
             return;
 
@@ -103,7 +103,12 @@ f = E - C ( Vector from center sphere to ray start )
 
         // If we shoot in this angle, our bullet may destroy other friendlies
         // Try to avoid this possibility
-        for (TankBody friendly : friendlies) {
+
+        for (TankBarrel friendlyBarrel : friendlies) {
+            if (friendlyBarrel == ai)
+                continue;
+
+            TankBody friendly = (TankBody) friendlyBarrel.getComponent(TargetComponent.class).target;
             PositionComponent friendlyPos = friendly.getComponent(PositionComponent.class);
             SizeComponent friendlySize = friendly.getComponent(SizeComponent.class);
 
@@ -118,6 +123,6 @@ f = E - C ( Vector from center sphere to ray start )
 
         ai.getComponent(AngleComponent.class).angle = shootAngle;
 
-        EntityFactory.createBullet(world, ai, 500);
+        EntityFactory.createBullet(ai, 500);
     }
 }
