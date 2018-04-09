@@ -17,8 +17,6 @@ import javafx.geometry.Pos;
 public class GraphicsSystem implements EntitySystem {
     private SpriteBatch batch = new SpriteBatch();
     private OrthographicCamera camera = new OrthographicCamera(1920, 1080);
-    Texture empty = new Texture("green.png");
-    Texture wall = new Texture("red.png");
     Texture grass = new Texture("Map/grass/mapTile_022.png");
     Texture dirt = new Texture("Map/dirt/mapTile_082.png");
 
