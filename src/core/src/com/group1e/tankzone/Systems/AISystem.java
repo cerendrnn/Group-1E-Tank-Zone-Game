@@ -2,10 +2,7 @@ package com.group1e.tankzone.Systems;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.group1e.tankzone.Components.FactionComponent;
-import com.group1e.tankzone.Components.PlayerComponent;
-import com.group1e.tankzone.Components.PositionComponent;
-import com.group1e.tankzone.Components.TargetComponent;
+import com.group1e.tankzone.Components.*;
 import com.group1e.tankzone.Entities.Entity;
 import com.group1e.tankzone.Entities.TankBarrel;
 import com.group1e.tankzone.Entities.TankBody;
@@ -19,6 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class AISystem implements EntitySystem {
+    private static final float MAX_VELOCITY = 100 * 3;
     private AITargetStrategy aiTargetStrategy;
     private AIShootStrategy aiShootStrategy;
     private AIMovementStrategy aiMovementStrategy;
@@ -89,6 +87,9 @@ public class AISystem implements EntitySystem {
                 aiShootStrategy.shoot(aiBarrel, target, aiList);
 
                 aiMovementStrategy.moveTo(aiBody, target);
+
+                VelocityComponent aiVelocity = aiBody.getComponent(VelocityComponent.class);
+                aiVelocity.velocity = Math.min(MAX_VELOCITY, aiVelocity.velocity);
             }
         }
     }

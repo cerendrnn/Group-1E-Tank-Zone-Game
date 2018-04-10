@@ -19,6 +19,7 @@ public class InputSystem implements EntitySystem {
     private static final float VELOCITY = 100;
     private static final float ANGULAR_VELOCITY = 100;
     private static final float BULLET_VELOCITY = 500;
+    private static final float MAX_VELOCITY = VELOCITY * 3;
 
     private Array<Entity> entitiesWithPlayer = new Array<Entity>();
 
@@ -58,6 +59,8 @@ public class InputSystem implements EntitySystem {
                     if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                         velocityComponent.velocity -= VELOCITY * deltaTime;
                     }
+                    velocityComponent.velocity = Math.min(MAX_VELOCITY, velocityComponent.velocity);
+
                     break;
                 case ROTATABLE:
                     float mouse_x = Gdx.input.getX();
