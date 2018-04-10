@@ -37,17 +37,28 @@ public class GraphicsSystem implements EntitySystem {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         PositionComponent camPos = World.getInstance().getCameraTarget();
+        int map[][] = World.getInstance().getMap();
+        int width = map.length;
+        int height = map[0].length;
 
-        camera.position.set(camPos.x, camPos.y, 0);
+        float cam_x = camPos.x;
+        float cam_y = camPos.y;
+
+        cam_x = Math.max(cam_x, camera.viewportWidth / 2f);
+        cam_y = Math.max(cam_y, camera.viewportHeight / 2f);
+
+        cam_x = Math.min(cam_x, width * 16);
+        cam_y = Math.min(cam_y, height * 16);
+        
+
+        camera.position.set(cam_x, cam_y, 0);
         camera.update();
 
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
 
-        int map[][] = World.getInstance().getMap();
-        int width = map.length;
-        int height = map[0].length;
+
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
