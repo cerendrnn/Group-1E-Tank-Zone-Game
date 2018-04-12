@@ -76,9 +76,8 @@ public class GraphicsSystem implements EntitySystem {
         cam_x = Math.max(cam_x, camera.viewportWidth / 2f);
         cam_y = Math.max(cam_y, camera.viewportHeight / 2f);
 
-        cam_x = Math.min(cam_x, width * 16);
-        cam_y = Math.min(cam_y, height * 16);
-        
+        cam_x = Math.min(cam_x, width * 32 - camera.viewportWidth / 2f);
+        cam_y = Math.min(cam_y, height * 32 - camera.viewportHeight / 2f);
 
         camera.position.set(cam_x, cam_y, 0);
         camera.update();
