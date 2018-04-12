@@ -156,7 +156,7 @@ public class GraphicsSystem implements EntitySystem {
                     texture.getHeight(),
                     1,
                     1,
-                    angle + 270, // rotate textures so that textures in assets folder will look upwards
+                    angle - 90, // In LibGDX, 0 degrees means right, but we want it to be up
                     0,
                     0,
                     texture.getWidth(),
