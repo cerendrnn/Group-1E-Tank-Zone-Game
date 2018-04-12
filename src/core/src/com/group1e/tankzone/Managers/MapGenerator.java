@@ -24,9 +24,8 @@ public class MapGenerator {
 
     private static final int WIDTH = 1920 / 4;
     private static final int HEIGHT = 1080 / 4;
-    private static final double FILL_RATIO = 0.6425;
+    private static final double FILL_RATIO = 0.6509;
     private static final double OBSTACLE_GEN_RATIO = 0.8;
-    private static final float CUT_TIE_LENGTH = 10*10;
 
     private Random random;
     private Tile[][] map;
@@ -53,9 +52,28 @@ public class MapGenerator {
         }
 
         randomlyPaintMap();
-        for (int i = 0; i < 3; ++i) smoothMap();
+        for (int i = 0; i < 12; ++i) {
+            if      (i % 4 == 0) smoothMapBottomLeft();
+            else if (i % 4 == 1) smoothMapBottomRight();
+            else if (i % 4 == 2) smoothMapTopLeft();
+            else                 smoothMapTopRight();
+        }
+
         randomlyPaintMap();
-        for (int i = 0; i < 4; ++i) smoothMap();
+        for (int i = 0; i < 8; ++i) {
+            if      (i % 4 == 1) smoothMapBottomLeft();
+            else if (i % 4 == 3) smoothMapBottomRight();
+            else if (i % 4 == 2) smoothMapTopLeft();
+            else                 smoothMapTopRight();
+        }
+
+        randomlyPaintMap();
+        for (int i = 0; i < 4; ++i) {
+            if      (i % 4 == 3) smoothMapBottomLeft();
+            else if (i % 4 == 0) smoothMapBottomRight();
+            else if (i % 4 == 2) smoothMapTopLeft();
+            else                 smoothMapTopRight();
+        }
 
         generateObstacles();
 
@@ -110,9 +128,39 @@ public class MapGenerator {
         }
     }
 
-    private void smoothMap() {
+    private void smoothMapBottomLeft() {
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
+                int wallCount = neighbouringWallsCountFor(x, y);
+
+                map[x][y] = wallCount > 4 ? Tile.DIRT : Tile.GRASS_CENTER;
+            }
+        }
+    }
+
+    private void smoothMapBottomRight() {
+        for (int x = WIDTH - 1; x >= 0; x--) {
+            for (int y = 0; y < HEIGHT; y++) {
+                int wallCount = neighbouringWallsCountFor(x, y);
+
+                map[x][y] = wallCount > 4 ? Tile.DIRT : Tile.GRASS_CENTER;
+            }
+        }
+    }
+
+    private void smoothMapTopLeft() {
+        for (int x = 0; x < WIDTH; x++) {
+            for (int y = HEIGHT - 1; y >= 0; y--) {
+                int wallCount = neighbouringWallsCountFor(x, y);
+
+                map[x][y] = wallCount > 4 ? Tile.DIRT : Tile.GRASS_CENTER;
+            }
+        }
+    }
+
+    private void smoothMapTopRight() {
+        for (int x = WIDTH - 1; x >= 0; x--) {
+            for (int y = HEIGHT - 1; y >= 0; y--) {
                 int wallCount = neighbouringWallsCountFor(x, y);
 
                 map[x][y] = wallCount > 4 ? Tile.DIRT : Tile.GRASS_CENTER;

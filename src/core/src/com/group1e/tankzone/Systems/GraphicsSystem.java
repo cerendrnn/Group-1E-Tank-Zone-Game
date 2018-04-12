@@ -113,6 +113,15 @@ public class GraphicsSystem implements EntitySystem {
             }
         }
 
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (true || map[x][y] != Tile.DIRT) {
+                    Texture toDraw = textureMap.get(map[x][y]);
+                    batch.draw(toDraw, x * 1, y * 1);
+                }
+            }
+        }
+
         for (Entity entity : entitiesWithTexture) {
             GraphicsComponent graphicsComponent = entity.getComponent(GraphicsComponent.class);
             PositionComponent positionComponent = entity.getComponent(PositionComponent.class);
