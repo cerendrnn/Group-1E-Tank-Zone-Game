@@ -121,8 +121,8 @@ public class GraphicsSystem implements EntitySystem {
 
             Texture texture = graphicsComponent.texture;
 
-            float x = 0;
-            float y = 0;
+            float x;
+            float y;
             if (positionComponent != null) {
                 x = positionComponent.x;
                 y = positionComponent.y;
@@ -141,7 +141,7 @@ public class GraphicsSystem implements EntitySystem {
                     || y - texture.getHeight() / 2f > cam_maxy)
                 continue;
 
-            float angle = 0;
+            float angle = 90; // default angle is 90 degrees
             if (angleComponent != null) {
                 angle = angleComponent.angle;
             }
