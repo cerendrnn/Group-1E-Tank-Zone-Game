@@ -48,7 +48,7 @@ public class GraphicsSystem implements EntitySystem {
         textureMap.put(Tile.GRASS_BOTTOM_LEFT, grassBottomleft);
         textureMap.put(Tile.GRASS_BOTTOM_RIGHT, grassBottomright);
 
-        dirt.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
+        dirt.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.MirroredRepeat);
     }
 
     @Override
