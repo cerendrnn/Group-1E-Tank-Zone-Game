@@ -100,6 +100,9 @@ public class GraphicsSystem implements EntitySystem {
         int tile_maxx = (int)Math.ceil(cam_maxx) / 32;
         int tile_maxy = (int)Math.ceil(cam_maxy) / 32;
 
+        tile_maxx = Math.min(tile_maxx, width - 1);
+        tile_maxy = Math.min(tile_maxy, height - 1);
+
         for (int x = tile_minx; x <= tile_maxx; x++) {
             for (int y = tile_miny; y <= tile_maxy; y++) {
 
