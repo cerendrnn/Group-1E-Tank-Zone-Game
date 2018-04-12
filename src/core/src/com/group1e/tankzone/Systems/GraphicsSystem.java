@@ -60,6 +60,7 @@ public class GraphicsSystem implements EntitySystem {
         }
     }
 
+
     @Override
     public void update() {
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -82,17 +83,30 @@ public class GraphicsSystem implements EntitySystem {
         camera.position.set(cam_x, cam_y, 0);
         camera.update();
 
+        float cam_minx = cam_x - camera.viewportWidth / 2f;
+        float cam_miny = cam_y - camera.viewportHeight / 2f;
+        float cam_maxx = cam_x + camera.viewportWidth / 2f;
+        float cam_maxy = cam_y + camera.viewportHeight / 2f;
+
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
 
         batch.draw(dirt, 0,0, 0, 0, width * 32, height * 32);
 
+        // Only draw visible parts within the camera
+        int tile_minx = (int)cam_minx / 32;
+        int tile_miny = (int)cam_miny / 32;
+        int tile_maxx = (int)Math.ceil(cam_maxx) / 32;
+        int tile_maxy = (int)Math.ceil(cam_maxy) / 32;
 
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                Texture toDraw = map[x][y] == 0 ? grass : dirt;
+        for (int x = tile_minx; x <= tile_maxx; x++) {
+            for (int y = tile_miny; y <= tile_maxy; y++) {
+
+                if (map[x][y] != Tile.DIRT) {
+                    Texture toDraw = textureMap.get(map[x][y]);
                     batch.draw(toDraw, x * 32, y * 32);
+                }
             }
         }
 
@@ -116,6 +130,13 @@ public class GraphicsSystem implements EntitySystem {
             } else {
                 throw new RuntimeException("GraphicsSystem: Could not get position of the sprite!");
             }
+
+            // Only draw things visible inside the camera
+            if (x + texture.getWidth() / 2f < cam_minx
+                    || y + texture.getHeight() / 2f < cam_miny
+                    || x - texture.getWidth() / 2f > cam_maxx
+                    || y - texture.getHeight() / 2f > cam_maxy)
+                continue;
 
             float angle = 0;
             if (angleComponent != null) {
