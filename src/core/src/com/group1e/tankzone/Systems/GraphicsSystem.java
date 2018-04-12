@@ -6,21 +6,50 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.group1e.tankzone.Components.AngleComponent;
 import com.group1e.tankzone.Components.GraphicsComponent;
 import com.group1e.tankzone.Components.PositionComponent;
 import com.group1e.tankzone.Components.TargetComponent;
 import com.group1e.tankzone.Entities.Entity;
+import com.group1e.tankzone.Managers.MapGenerator;
 import com.group1e.tankzone.Managers.World;
-import javafx.geometry.Pos;
+
+import static com.group1e.tankzone.Managers.MapGenerator.Tile;
 
 public class GraphicsSystem implements EntitySystem {
     private SpriteBatch batch = new SpriteBatch();
     private OrthographicCamera camera = new OrthographicCamera(1920, 1080);
-    Texture grass = new Texture("Map/grass/mapTile_022.png");
+
+    ObjectMap<Tile, Texture> textureMap = new ObjectMap<Tile, Texture>();
     Texture dirt = new Texture("Map/dirt/mapTile_082.png");
 
     private Array<Entity> entitiesWithTexture = new Array<Entity>();
+
+    public GraphicsSystem() {
+        Texture grassTopleft = new Texture("Map/grass/topleft.png");
+        Texture grassTop = new Texture("Map/grass/top.png");
+        Texture grassTopright = new Texture("Map/grass/topright.png");
+        Texture grassRight = new Texture("Map/grass/right.png");
+        Texture grassBottomright = new Texture("Map/grass/bottomright.png");
+        Texture grassBottom = new Texture("Map/grass/bottom.png");
+        Texture grassBottomleft = new Texture("Map/grass/bottomleft.png");
+        Texture grassLeft = new Texture("Map/grass/left.png");
+        Texture grassCenter = new Texture("Map/grass/center.png");
+
+        textureMap.put(Tile.DIRT, dirt);
+        textureMap.put(Tile.GRASS_CENTER, grassCenter);
+        textureMap.put(Tile.GRASS_LEFT, grassLeft);
+        textureMap.put(Tile.GRASS_RIGHT, grassRight);
+        textureMap.put(Tile.GRASS_TOP, grassTop);
+        textureMap.put(Tile.GRASS_BOTTOM, grassBottom);
+        textureMap.put(Tile.GRASS_TOP_LEFT, grassTopleft);
+        textureMap.put(Tile.GRASS_TOP_RIGHT, grassTopright);
+        textureMap.put(Tile.GRASS_BOTTOM_LEFT, grassBottomleft);
+        textureMap.put(Tile.GRASS_BOTTOM_RIGHT, grassBottomright);
+
+        dirt.setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
+    }
 
     @Override
     public void entityUpdated(Entity entity, boolean added) {
@@ -37,7 +66,7 @@ public class GraphicsSystem implements EntitySystem {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         PositionComponent camPos = World.getInstance().getCameraTarget();
-        int map[][] = World.getInstance().getMap();
+        Tile map[][] = World.getInstance().getMap();
         int width = map.length;
         int height = map[0].length;
 
@@ -58,12 +87,13 @@ public class GraphicsSystem implements EntitySystem {
 
         batch.begin();
 
+        batch.draw(dirt, 0,0, 0, 0, width * 32, height * 32);
 
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 Texture toDraw = map[x][y] == 0 ? grass : dirt;
-                batch.draw(toDraw, x * 16, y * 16);
+                    batch.draw(toDraw, x * 32, y * 32);
             }
         }
 

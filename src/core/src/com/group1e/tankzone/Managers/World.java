@@ -5,10 +5,12 @@ import com.badlogic.gdx.utils.Array;
 import com.group1e.tankzone.Components.PositionComponent;
 import com.group1e.tankzone.Entities.Entity;
 
+import static com.group1e.tankzone.Managers.MapGenerator.Tile;
+
 public class World {
     private PositionComponent cameraTarget;
     private Engine engine;
-    private int[][] map;
+    private Tile[][] map;
 
     private static final World instance = new World();
     private World() { }
@@ -24,11 +26,11 @@ public class World {
         this.cameraTarget = cameraTarget;
     }
 
-    public int[][] getMap() {
+    public Tile[][] getMap() {
         return map;
     }
 
-    public void setMap(int[][] map) {
+    public void setMap(Tile[][] map) {
         this.map = map;
     }
 
