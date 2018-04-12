@@ -68,8 +68,8 @@ public class InputSystem implements EntitySystem {
                     // We have to convert it to the game's version by subtracting it from the height
                     float mouse_y = Gdx.graphics.getHeight() - Gdx.input.getY();
 
-                    float center_x = 1920 / 2f;
-                    float center_y = 1080 / 2f;
+                    float center_x = Gdx.graphics.getWidth() / 2f;
+                    float center_y = Gdx.graphics.getHeight() / 2f;
 
                     angleComponent.angle = Util.getAngleBetweenTwoPoints(mouse_x, mouse_y, center_x, center_y);
                     TankBarrel barrel = (TankBarrel)entity;
