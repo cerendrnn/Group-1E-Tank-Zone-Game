@@ -43,7 +43,7 @@ public class SpawnSystem implements EntitySystem {
             SpawnComponent spawnComponent = entity.getComponent(SpawnComponent.class);
             SizeComponent sizeComponent = entity.getComponent(SizeComponent.class);
 
-           ///??? for(int i=0; i)
+           ///????
         }
     }
 
