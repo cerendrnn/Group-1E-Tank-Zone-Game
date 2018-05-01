@@ -20,35 +20,93 @@ import static com.group1e.tankzone.Managers.MapGenerator.Tile;
 public class GraphicsSystem implements EntitySystem {
     private SpriteBatch batch = new SpriteBatch();
     private OrthographicCamera camera = new OrthographicCamera(1920, 1080);
+    private GameType.Climate climate;
 
     ObjectMap<Tile, Texture> textureMap = new ObjectMap<Tile, Texture>();
     Texture dirt = new Texture("Map/dirt/mapTile_082.png");
+    Texture snow = new Texture("Map/snow/mapTile_077.png");
+    Texture sand = new Texture("Map/sand/mapTile_017.png");
 
     private Array<Entity> entitiesWithTexture = new Array<Entity>();
 
     public GraphicsSystem() {
-        Texture grassTopleft = new Texture("Map/grass/topleft.png");
-        Texture grassTop = new Texture("Map/grass/top.png");
-        Texture grassTopright = new Texture("Map/grass/topright.png");
-        Texture grassRight = new Texture("Map/grass/right.png");
-        Texture grassBottomright = new Texture("Map/grass/bottomright.png");
-        Texture grassBottom = new Texture("Map/grass/bottom.png");
-        Texture grassBottomleft = new Texture("Map/grass/bottomleft.png");
-        Texture grassLeft = new Texture("Map/grass/left.png");
-        Texture grassCenter = new Texture("Map/grass/center.png");
+               
+        if(climate== GameType.Climate.WINTER) {
+            Texture snowTopleft = new Texture("Map/snow/mapTile_061.png");
+            Texture snowTop = new Texture("Map/snow/mapTile_062.png");
+            Texture snowTopright = new Texture("Map/snow/mapTile_063.png");
+            Texture snowRight = new Texture("Map/snow/mapTile_078.png");
+            Texture snowBottomright = new Texture("Map/snow/mapTile_093.png");
+            Texture snowBottom = new Texture("Map/snow/mapTile_092.png");
+            Texture snowBottomleft = new Texture("Map/snow/mapTile_091.png");
+            Texture snowLeft = new Texture("Map/snow/mapTile_076.png");
+            Texture snowCenter = new Texture("Map/snow/mapTile_077.png");
 
-        textureMap.put(Tile.DIRT, dirt);
-        textureMap.put(Tile.GRASS_CENTER, grassCenter);
-        textureMap.put(Tile.GRASS_LEFT, grassLeft);
-        textureMap.put(Tile.GRASS_RIGHT, grassRight);
-        textureMap.put(Tile.GRASS_TOP, grassTop);
-        textureMap.put(Tile.GRASS_BOTTOM, grassBottom);
-        textureMap.put(Tile.GRASS_TOP_LEFT, grassTopleft);
-        textureMap.put(Tile.GRASS_TOP_RIGHT, grassTopright);
-        textureMap.put(Tile.GRASS_BOTTOM_LEFT, grassBottomleft);
-        textureMap.put(Tile.GRASS_BOTTOM_RIGHT, grassBottomright);
+            textureMap.put(Tile.SNOW, snow);
+            textureMap.put(Tile.SNOW_CENTER, snowCenter);
+            textureMap.put(Tile.SNOW_LEFT, snowLeft);
+            textureMap.put(Tile.SNOW_RIGHT, snowRight);
+            textureMap.put(Tile.SNOW_TOP, snowTop);
+            textureMap.put(Tile.SNOW_BOTTOM, snowBottom);
+            textureMap.put(Tile.SNOW_TOP_LEFT, snowTopleft);
+            textureMap.put(Tile.SNOW_TOP_RIGHT, snowTopright);
+            textureMap.put(Tile.SNOW_BOTTOM_LEFT, snowBottomleft);
+            textureMap.put(Tile.SNOW_BOTTOM_RIGHT, snowBottomright);
 
-        dirt.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.MirroredRepeat);
+            snow.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.MirroredRepeat);
+        }
+        
+        else if(climate== GameType.Climate.DESERT){
+
+            Texture sandTopleft = new Texture("Map/sand/mapTile_001.png");
+            Texture sandTop = new Texture("Map/sand/mapTile_002.png");
+            Texture sandTopright = new Texture("Map/sand/mapTile_003.png");
+            Texture sandRight = new Texture("Map/sand/mapTile_018.png");
+            Texture sandBottomright = new Texture("Map/sand/mapTile_048.png");
+            Texture sandBottom = new Texture("Map/sand/mapTile_047.png");
+            Texture sandBottomleft = new Texture("Map/sand/mapTile_046.png");
+            Texture sandLeft = new Texture("Map/sand/mapTile_016.png");
+            Texture sandCenter = new Texture("Map/sand/mapTile_017.png");
+
+            textureMap.put(Tile.SAND, sand);
+            textureMap.put(Tile.SAND_CENTER, sandCenter);
+            textureMap.put(Tile.SAND_LEFT, sandLeft);
+            textureMap.put(Tile.SAND_RIGHT, sandRight);
+            textureMap.put(Tile.SAND_TOP, sandTop);
+            textureMap.put(Tile.SAND_BOTTOM, sandBottom);
+            textureMap.put(Tile.SAND_TOP_LEFT, sandTopleft);
+            textureMap.put(Tile.SAND_TOP_RIGHT, sandTopright);
+            textureMap.put(Tile.SAND_BOTTOM_LEFT, sandBottomleft);
+            textureMap.put(Tile.SAND_BOTTOM_RIGHT, sandBottomright);
+
+            sand.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.MirroredRepeat);
+
+        }
+        else if(climate== GameType.Climate.TEMPERATE){
+            
+            Texture grassTopleft = new Texture("Map/grass/topleft.png");
+            Texture grassTop = new Texture("Map/grass/top.png");
+            Texture grassTopright = new Texture("Map/grass/topright.png");
+            Texture grassRight = new Texture("Map/grass/right.png");
+            Texture grassBottomright = new Texture("Map/grass/bottomright.png");
+            Texture grassBottom = new Texture("Map/grass/bottom.png");
+            Texture grassBottomleft = new Texture("Map/grass/bottomleft.png");
+            Texture grassLeft = new Texture("Map/grass/left.png");
+            Texture grassCenter = new Texture("Map/grass/center.png");
+
+
+             textureMap.put(Tile.DIRT, dirt);
+             textureMap.put(Tile.GRASS_CENTER, grassCenter);
+             textureMap.put(Tile.GRASS_LEFT, grassLeft);
+             textureMap.put(Tile.GRASS_RIGHT, grassRight);
+             textureMap.put(Tile.GRASS_TOP, grassTop);
+             textureMap.put(Tile.GRASS_BOTTOM, grassBottom);
+             textureMap.put(Tile.GRASS_TOP_LEFT, grassTopleft);
+             textureMap.put(Tile.GRASS_TOP_RIGHT, grassTopright);
+             textureMap.put(Tile.GRASS_BOTTOM_LEFT, grassBottomleft);
+             textureMap.put(Tile.GRASS_BOTTOM_RIGHT, grassBottomright);
+
+             dirt.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.MirroredRepeat);
     }
 
     @Override
@@ -92,7 +150,12 @@ public class GraphicsSystem implements EntitySystem {
 
         batch.begin();
 
-        batch.draw(dirt, 0,0, 0, 0, width * 32, height * 32);
+       if(climate == GameType.Climate.TEMPERATE)
+           batch.draw(dirt, 0,0, 0, 0, width * 32, height * 32);
+        else if(climate == GameType.Climate.WINTER)
+            batch.draw(snow, 0,0, 0, 0, width * 32, height * 32);
+        else if(climate == GameType.Climate.DESERT)
+            batch.draw(sand, 0,0, 0, 0, width * 32, height * 32);
 
         // Only draw visible parts within the camera
         int tile_minx = (int)cam_minx / 32;
@@ -102,8 +165,9 @@ public class GraphicsSystem implements EntitySystem {
 
         tile_maxx = Math.min(tile_maxx, width - 1);
         tile_maxy = Math.min(tile_maxy, height - 1);
-
-        for (int x = tile_minx; x <= tile_maxx; x++) {
+        
+        if(climate == GameType.Climate.TEMPERATE) {
+         for (int x = tile_minx; x <= tile_maxx; x++) {
             for (int y = tile_miny; y <= tile_maxy; y++) {
 
                 if (map[x][y] != Tile.DIRT) {
@@ -111,13 +175,57 @@ public class GraphicsSystem implements EntitySystem {
                     batch.draw(toDraw, x * 32, y * 32);
                 }
             }
-        }
+          }
+        
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if (true || map[x][y] != Tile.DIRT) {
                     Texture toDraw = textureMap.get(map[x][y]);
                     batch.draw(toDraw, x * 1, y * 1);
+                }
+            }
+        }
+        }
+        
+        else if(climate == GameType.Climate.WINTER){
+            for (int x = tile_minx; x <= tile_maxx; x++) {
+                for (int y = tile_miny; y <= tile_maxy; y++) {
+
+                    if (map[x][y] != Tile.SNOW) {
+                        Texture toDraw = textureMap.get(map[x][y]);
+                        batch.draw(toDraw, x * 32, y * 32);
+                    }
+                }
+            }
+
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    if (true || map[x][y] != Tile.SNOW) {
+                        Texture toDraw = textureMap.get(map[x][y]);
+                        batch.draw(toDraw, x * 1, y * 1);
+                    }
+                }
+            }
+        }
+        
+        else if(climate== GameType.Climate.DESERT){
+            for (int x = tile_minx; x <= tile_maxx; x++) {
+                for (int y = tile_miny; y <= tile_maxy; y++) {
+
+                    if (map[x][y] != Tile.SAND) {
+                        Texture toDraw = textureMap.get(map[x][y]);
+                        batch.draw(toDraw, x * 32, y * 32);
+                    }
+                }
+            }
+
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    if (true || map[x][y] != Tile.SAND) {
+                        Texture toDraw = textureMap.get(map[x][y]);
+                        batch.draw(toDraw, x * 1, y * 1);
+                    }
                 }
             }
         }
