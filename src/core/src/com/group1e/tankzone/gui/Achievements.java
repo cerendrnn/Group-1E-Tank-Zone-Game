@@ -19,11 +19,12 @@ public class Achievements extends JPanel {
     ImageIcon img = null;
     JButton back;
     Font font;
+    File f = null;
 
 
     public Achievements(){
         //Back button
-        img = new ImageIcon( getClass().getResource("back.png"));
+        img = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\back.png");
         Image temp = img.getImage();
         temp = temp.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(temp);
@@ -32,7 +33,9 @@ public class Achievements extends JPanel {
         back.setBounds(20, 20, 50, 50);
 
         try {
-            background = ImageIO.read(getClass().getResourceAsStream("achievements.jpg"));
+            f = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\achievements.png");
+            background = new BufferedImage(737, 413, BufferedImage.TYPE_INT_ARGB);
+            background = ImageIO.read(f);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -64,6 +67,3 @@ public class Achievements extends JPanel {
 
 
 }
-
-
-
