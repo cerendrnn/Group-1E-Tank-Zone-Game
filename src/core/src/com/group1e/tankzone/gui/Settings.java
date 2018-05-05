@@ -28,7 +28,7 @@ public class Settings extends JPanel {
 
     public Settings(){
         //Back button
-        img = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\back.png");
+        img = new ImageIcon("back.png");
         Image temp = img.getImage();
         temp = temp.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(temp);
@@ -39,7 +39,7 @@ public class Settings extends JPanel {
 
 
         try {
-            f = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\settings1.png");
+            f = new File("settings1.jpg");
             background = new BufferedImage(627, 626, BufferedImage.TYPE_INT_ARGB);
             background = ImageIO.read(f);
         } catch (IOException e){

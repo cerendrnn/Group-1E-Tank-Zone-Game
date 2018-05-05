@@ -25,7 +25,7 @@ public class Help extends JPanel {
     public Help() {
 
         //Back button
-        img = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\back.png");
+        img = new ImageIcon("back.png");
         Image temp = img.getImage();
         temp = temp.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(temp);
@@ -57,7 +57,7 @@ public class Help extends JPanel {
 
         try {
             //background = ImageIO.read(getClass().getResourceAsStream("help.png"));
-            f = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\help.png");
+            f = new File("help.png");
             background = new BufferedImage(561, 466, BufferedImage.TYPE_INT_ARGB);
             background = ImageIO.read(f);
         } catch (IOException e){

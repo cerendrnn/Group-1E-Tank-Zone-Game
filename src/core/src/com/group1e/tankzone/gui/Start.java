@@ -1,5 +1,8 @@
 package com.group1e.tankzone.gui;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.group1e.tankzone.Managers.GameManager;
 import com.group1e.tankzone.Managers.GameType;
 
 import javax.imageio.ImageIO;
@@ -196,7 +199,7 @@ public class Start extends JPanel implements ActionListener {
         medium.addItemListener(new CheckBoxListener());
         hard.addItemListener(new CheckBoxListener());
 
-        img = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\back.png");
+        img = new ImageIcon("back.png");
         Image temp = img.getImage();
         temp = temp.getScaledInstance(80, 80, java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(temp);
@@ -205,7 +208,7 @@ public class Start extends JPanel implements ActionListener {
         back.setBounds(30, 30, 75, 75);
 
 
-        imgAnother = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\start.png");
+        imgAnother = new ImageIcon("start.png");
         Image temp1 = img.getImage();
         temp1 = temp1.getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(temp1);
@@ -225,7 +228,7 @@ public class Start extends JPanel implements ActionListener {
 
 
         try {
-            file = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\maxresdefault.png");
+            file = new File("maxresdefault.jpg");
             background = new BufferedImage(1024, 768, BufferedImage.TYPE_INT_ARGB);
             background = ImageIO.read(file);
             //background = ImageIO.read(getClass().getResourceAsStream("maxresdefault.jpg"));
@@ -265,6 +268,7 @@ public class Start extends JPanel implements ActionListener {
 
         return null;
     }
+
 
     public String getModeSelected() {
         return modeSelected;

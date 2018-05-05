@@ -30,7 +30,7 @@ public class Credits extends JPanel {
     public Credits() {
 
         //Back button
-        img = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\back.png");
+        img = new ImageIcon("back.png");
 
         Image temp = img.getImage();
         temp = temp.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
@@ -40,7 +40,7 @@ public class Credits extends JPanel {
         back.setBounds(20, 20, 50, 50);
 
         try {
-            f = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\thismeanswar.png");
+            f = new File("thismeanswar.png");
             background = new BufferedImage(561, 466, BufferedImage.TYPE_INT_ARGB);
             background = ImageIO.read(f);
             //background = ImageIO.read(getClass().getResourceAsStream("thismeanswar.png"));

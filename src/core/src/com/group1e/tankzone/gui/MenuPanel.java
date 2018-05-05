@@ -39,7 +39,7 @@ public class MenuPanel extends JPanel implements ActionListener {
     public MenuPanel() {
 
         try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\World War Z Theme Song.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("World War Z Theme Song.wav").getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -117,7 +117,7 @@ public class MenuPanel extends JPanel implements ActionListener {
         buttons.setBounds(480, 200, 570, 570);
 
         try {
-            f = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\tank_backg_0.png");
+            f = new File("tank_backg_0.png");
             background = new BufferedImage(737, 413, BufferedImage.TYPE_INT_ARGB);
             background = ImageIO.read(f);
             //background = ImageIO.read(getClass().getResourceAsStream("tank_backg_0.png"));

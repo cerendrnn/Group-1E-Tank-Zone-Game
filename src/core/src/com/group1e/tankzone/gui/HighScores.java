@@ -24,7 +24,7 @@ public class HighScores extends JPanel {
 
     public HighScores(){
         //Back button
-        img = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\back.png");
+        img = new ImageIcon("back.png");
         Image temp = img.getImage();
         temp = temp.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(temp);
@@ -33,7 +33,7 @@ public class HighScores extends JPanel {
         back.setBounds(20, 20, 50, 50);
 
         try {
-            f = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\highscores.png");
+            f = new File("highscores.png");
             background = new BufferedImage(574, 366, BufferedImage.TYPE_INT_ARGB);
             background = ImageIO.read(f);
         } catch (IOException e){
