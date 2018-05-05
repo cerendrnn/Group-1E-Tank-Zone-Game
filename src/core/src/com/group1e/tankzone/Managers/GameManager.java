@@ -13,6 +13,15 @@ import com.group1e.tankzone.Systems.AI.TargetClosestStrategy;
 import static com.badlogic.gdx.math.MathUtils.random;
 
 public class GameManager extends ApplicationAdapter {
+    GameType.Climate gameClimate = GameType.Climate.temperate;
+    GameType.Difficulty gameDifficulty = GameType.Difficulty.easy;
+    GameType.GameMode gameMode = GameType.GameMode.FFA;
+
+    public int easyInitialTanks = 5;
+    public int mediumInitialTanks = 10;
+    public int hardInitialTanks = 15;
+    //private String playerName = "  ";
+    public int scoreOfPlayer = 0;
 	@Override
 	public void create () {
 	    Engine engine = new Engine();
@@ -44,15 +53,72 @@ public class GameManager extends ApplicationAdapter {
             engine.addEntity(e);
         }
 
-	    for (int i = 0; i < 10; ++i) {
-            EntityFactory.createTank(
-                    "red",
-                    random(0, 20) * 20,
-                    random(0, 20) * 20,
-                    random(-20, 20)
-            );
-        }
+	    if (gameDifficulty == GameType.Difficulty.easy) {
+            if (gameMode == GameType.GameMode.FFA) {
+                for (int i = 0; i < easyInitialTanks; ++i) {
+                    EntityFactory.createTank(
+                            "red",
+                            random(0, 20) * 20,
+                            random(0, 20) * 20,
+                            random(-20, 20)
+                    );
+                }
+            } else if (gameMode == GameType.GameMode.CTF) {
 
+                if (gameClimate == GameType.Climate.desert)
+                    EntityFactory.createCastle("blue","desert",0,0,0);
+                else if (gameClimate == GameType.Climate.winter)
+                    EntityFactory.createCastle("blue","winter",0,0,0);
+                else if (gameClimate == GameType.Climate.temperate)
+                    EntityFactory.createCastle("blue","temperate",0,0,0);
+
+            }
+
+        } else if (gameDifficulty == GameType.Difficulty.medium) {
+            if (gameMode == GameType.GameMode.FFA) {
+                for (int i = 0; i < mediumInitialTanks; ++i) {
+                    EntityFactory.createTank(
+                            "red",
+                            random(0, 20) * 20,
+                            random(0, 20) * 20,
+                            random(-20, 20)
+                    );
+                }
+            }else if (gameMode == GameType.GameMode.CTF) {
+
+                if (gameClimate == GameType.Climate.desert)
+                    EntityFactory.createCastle("blue","desert",0,0,0);
+                else if (gameClimate == GameType.Climate.winter)
+                    EntityFactory.createCastle("blue","winter",0,0,0);
+                else if (gameClimate == GameType.Climate.temperate)
+                    EntityFactory.createCastle("blue","temperate",0,0,0);
+
+            }
+
+        } else if (gameDifficulty == GameType.Difficulty.hard) {
+            if (gameMode == GameType.GameMode.FFA) {
+                for (int i = 0; i < hardInitialTanks; ++i) {
+                    EntityFactory.createTank(
+                            "red",
+                            random(0, 20) * 20,
+                            random(0, 20) * 20,
+                            random(-20, 20)
+                    );
+                }
+            }
+            else if (gameMode == GameType.GameMode.CTF) {
+
+                if (gameClimate == GameType.Climate.desert)
+                    EntityFactory.createCastle("blue","desert",0,0,0);
+                else if (gameClimate == GameType.Climate.winter)
+                    EntityFactory.createCastle("blue","winter",0,0,0);
+                else if (gameClimate == GameType.Climate.temperate)
+                    EntityFactory.createCastle("blue","temperate",0,0,0);
+
+            }
+
+        }
+    }
 	    //engine.addEntity(new Blackhole(300, 300, 10000));
 	}
 
