@@ -1,5 +1,7 @@
 package com.group1e.tankzone.gui;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.group1e.tankzone.Components.PositionComponent;
 import com.group1e.tankzone.Entities.Entity;
 import com.group1e.tankzone.Entities.EntityFactory;
@@ -221,6 +223,14 @@ public class MainMenu {
                     gameMode = GameType.GameMode.CTF;
                 if (playPanel.getModeSelected() == "ffa")
                     gameMode = GameType.GameMode.FFA;
+
+                LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+                config.width = 1920;
+                config.height = 1080;
+                new LwjglApplication(new GameManager(gameClimate, gameDifficulty, gameMode), config);
+
+                mainMenuFrame.setVisible(false);
+
                 //if (playPanel.getFactionSelected() == "team")
                     //gameFaction = GameType.GameFaction.TEAM;
                 //if (playPanel.getFactionSelected() == " ")

@@ -17,6 +17,12 @@ public class GameManager extends ApplicationAdapter {
     GameType.Difficulty gameDifficulty = GameType.Difficulty.EASY;
     GameType.GameMode gameMode = GameType.GameMode.FFA;
 
+    public GameManager(GameType.Climate gameClimate, GameType.Difficulty gameDifficulty, GameType.GameMode gameMode) {
+        this.gameClimate = gameClimate;
+        this.gameDifficulty = gameDifficulty;
+        this.gameMode = gameMode;
+    }
+
     public int easyInitialTanks = 5;
     public int mediumInitialTanks = 10;
     public int hardInitialTanks = 15;
