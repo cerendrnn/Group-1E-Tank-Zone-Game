@@ -1,16 +1,15 @@
 package com.group1e.tankzone.Systems;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.group1e.tankzone.Components.AngleComponent;
-import com.group1e.tankzone.Components.GraphicsComponent;
-import com.group1e.tankzone.Components.PositionComponent;
-import com.group1e.tankzone.Components.TargetComponent;
+import com.group1e.tankzone.Components.*;
 import com.group1e.tankzone.Entities.Entity;
 import com.group1e.tankzone.Managers.GameType;
 import com.group1e.tankzone.Managers.MapGenerator;
@@ -20,6 +19,7 @@ import static com.group1e.tankzone.Managers.MapGenerator.Tile;
 
 public class GraphicsSystem implements EntitySystem {
     private SpriteBatch batch = new SpriteBatch();
+    private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private OrthographicCamera camera = new OrthographicCamera(1920, 1080);
 
     ObjectMap<Tile, Texture> textureMap = new ObjectMap<Tile, Texture>();
@@ -105,6 +105,8 @@ public class GraphicsSystem implements EntitySystem {
 
             dirt.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.MirroredRepeat);
         }
+
+        shapeRenderer.setColor(Color.GREEN);
     }
 
     @Override
@@ -145,6 +147,7 @@ public class GraphicsSystem implements EntitySystem {
         float cam_maxy = cam_y + camera.viewportHeight / 2f;
 
         batch.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(camera.combined);
 
         batch.begin();
 
@@ -225,9 +228,25 @@ public class GraphicsSystem implements EntitySystem {
                     false
             );
 
+
+
         }
 
         batch.end();
+
+
+        for (Entity entity : entitiesWithTexture) {
+            HealthComponent healthComponent = entity.getComponent(HealthComponent.class);
+            PositionComponent positionComponent = entity.getComponent(PositionComponent.class);
+            Texture texture = entity.getComponent(GraphicsComponent.class).texture;
+
+            if (healthComponent != null) {
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                shapeRenderer.rect(positionComponent.x - 20, positionComponent.y - texture.getHeight() / 2f - 7, healthComponent.health, 2);
+                shapeRenderer.end();
+            }
+        }
+
     }
 
 }
