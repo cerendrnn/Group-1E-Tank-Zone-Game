@@ -8,6 +8,7 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import java.net.URL;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,8 @@ public class MenuPanel extends JPanel implements ActionListener {
 
 
     BufferedImage background = null;
+    File f = null;
+    //Image background;
     ImageIcon img;
     JPanel buttons;
     JButton newGame;
@@ -44,7 +47,6 @@ public class MenuPanel extends JPanel implements ActionListener {
             System.out.println("Error with playing sound.");
             ex.printStackTrace();
         }
-
 
 
         buttons = new JPanel();
@@ -115,11 +117,17 @@ public class MenuPanel extends JPanel implements ActionListener {
         buttons.setBounds(480, 200, 570, 570);
 
         try {
-            background = ImageIO.read(getClass().getResourceAsStream("tank_backg_0.png"));
+            f = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\tank_backg_0.png");
+            background = new BufferedImage(737, 413, BufferedImage.TYPE_INT_ARGB);
+            background = ImageIO.read(f);
+            //background = ImageIO.read(getClass().getResourceAsStream("tank_backg_0.png"));
+            //background = ImageIO.read(getClass().getResource("\\com\\group1e\\tankzone\\gui\\resources.images\\tank_backg_0.png"));
+
+
+
         } catch (IOException e){
             e.printStackTrace();
         }
-
 
 
     }
@@ -184,4 +192,5 @@ public class MenuPanel extends JPanel implements ActionListener {
 	  }  */
 
 }
+
 
