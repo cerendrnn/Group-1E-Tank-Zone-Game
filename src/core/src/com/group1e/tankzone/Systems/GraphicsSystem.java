@@ -24,7 +24,7 @@ public class GraphicsSystem implements EntitySystem {
 
     ObjectMap<Tile, Texture> textureMap = new ObjectMap<Tile, Texture>();
     Texture dirt = new Texture("Map/dirt/mapTile_082.png");
-    Texture snow = new Texture("Map/grey/mapTile_027.png");
+    Texture snow = new Texture("Map/mapTile_188.png");
     Texture sand = new Texture("Map/sand/mapTile_017.png");
 
     private Array<Entity> entitiesWithTexture = new Array<Entity>();

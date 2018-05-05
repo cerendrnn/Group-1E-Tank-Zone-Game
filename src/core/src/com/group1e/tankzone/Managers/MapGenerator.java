@@ -24,8 +24,8 @@ public class MapGenerator {
 
     private static final int WIDTH = 1920 / 4;
     private static final int HEIGHT = 1080 / 4;
-    private static final double FILL_RATIO = 0.6509;
-    private static final double OBSTACLE_GEN_RATIO = 0.8;
+    private double fillRatio = 0.6509;
+    private double obstacleGenRatio = 0.8;
 
     private Random random;
     private Tile[][] map;
@@ -33,6 +33,17 @@ public class MapGenerator {
 
     public MapGenerator() {
         this.random = new Random();
+
+        if (GameType.climate == GameType.Climate.TEMPERATE) {
+            fillRatio = 0.6509;
+            obstacleGenRatio = 0.8;
+        } else if (GameType.climate == GameType.Climate.WINTER) {
+            fillRatio = 0.6515;
+            obstacleGenRatio = 0.4;
+        } else {
+            fillRatio = 0.6520;
+            obstacleGenRatio = 0.7;
+        }
 
         generateMap();
     }
@@ -121,7 +132,7 @@ public class MapGenerator {
                     map[x][y] = Tile.DIRT;
                 } else {
                     double randomRatio = random.nextDouble();
-                    if (randomRatio < FILL_RATIO)
+                    if (randomRatio < fillRatio)
                         map[x][y] = Tile.DIRT;
                 }
             }
@@ -194,7 +205,11 @@ public class MapGenerator {
 
     private void generateObstacles() {
         // TODO move this to constants
-        final String obstacleTypes[] = {"tree1", "tree2", "rock"};
+        String obstacleTypes[];
+        if (GameType.climate == GameType.Climate.WINTER)
+            obstacleTypes = new String[] {"tree1", "tree2", "rock", "snowman"};
+        else
+            obstacleTypes = new String[] {"tree1", "tree2", "rock"};
 
         for (int x = 0; x < WIDTH; x += 2) {
             for (int y = 0; y < HEIGHT; y += 2) {
@@ -202,7 +217,7 @@ public class MapGenerator {
 
                 if (wallCount == 0) {
                     double randomChance = random.nextDouble();
-                    if (randomChance < OBSTACLE_GEN_RATIO) {
+                    if (randomChance < obstacleGenRatio) {
                         String randObstacleType = obstacleTypes[random.nextInt(obstacleTypes.length)];
                         generatedObstacles.add(new Obstacle(randObstacleType, x * 32, y * 32));
                     }
