@@ -1,5 +1,7 @@
 package com.group1e.tankzone.gui;
 
+import com.group1e.tankzone.Managers.GameType;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -26,20 +28,22 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.border.*;
 
-public class Start extends JPanel implements ActionListener{
+public class Start extends JPanel implements ActionListener {
 
-    private String modeSelected;
-    private String factionSelected;
-    private String climateSelected;
-    private String difficultySelected;
+    private String modeSelected = " ";
+    private String factionSelected = " ";
+    private String climateSelected = " ";
+    private String difficultySelected = " ";
+
     BufferedImage background = null;
     JLabel prompt, mode, faction, climate, difficulty;
     JTextField userName;
     JPanel aboutUser;
     JPanel checkboxes1;
-    JPanel checkboxes2 ;
+    JPanel checkboxes2;
     JPanel checkboxes3;
     JButton play;
     JButton back;
@@ -47,6 +51,7 @@ public class Start extends JPanel implements ActionListener{
     ImageIcon img = null;
     ImageIcon imgAnother = null;
     ImageIcon imgAnother2 = null;
+    File file = null;
 
     public Start() {
 
@@ -142,10 +147,10 @@ public class Start extends JPanel implements ActionListener{
 
         aboutUser.setOpaque(false);
 
-        aboutUser.setLayout( new BoxLayout(aboutUser, BoxLayout.X_AXIS));
-        aboutUser.setAlignmentX( JComponent.CENTER_ALIGNMENT);
+        aboutUser.setLayout(new BoxLayout(aboutUser, BoxLayout.X_AXIS));
+        aboutUser.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         aboutUser.add(Box.createHorizontalGlue());
-        aboutUser.setLayout( new FlowLayout());
+        aboutUser.setLayout(new FlowLayout());
         aboutUser.add(prompt);
         aboutUser.add(userName);
         aboutUser.add(mode);
@@ -153,6 +158,7 @@ public class Start extends JPanel implements ActionListener{
         aboutUser.add(ffa);
 
         aboutUser.add(faction);
+        aboutUser.add(hasFaction);
         aboutUser.add(climate);
         aboutUser.add(temperate);
         aboutUser.add(winter);
@@ -164,41 +170,48 @@ public class Start extends JPanel implements ActionListener{
 
         //help.setPreferredSize(new Dimension(1000, 100));
         //empty.setPreferredSize(new Dimension(1000, 200));
-        aboutUser.setPreferredSize(new Dimension(100,100));
+        aboutUser.setPreferredSize(new Dimension(100, 100));
         //aboutUser.setBounds(20, 20, 30, 30);
-        prompt.setPreferredSize( new Dimension(400, 40));
-        userName.setPreferredSize( new Dimension(400, 40));
-        mode.setPreferredSize( new Dimension(400, 40));
-        ctf.setPreferredSize( new Dimension(400, 40));
-        ffa.setPreferredSize( new Dimension(400, 40));
-        faction.setPreferredSize( new Dimension(400, 50));
-        climate.setPreferredSize( new Dimension(400, 50));
-        temperate.setPreferredSize( new Dimension(400, 40));
-        winter.setPreferredSize( new Dimension(400, 40));
-        desert.setPreferredSize( new Dimension(400, 40));
-        difficulty.setPreferredSize( new Dimension(400, 50));
-        easy.setPreferredSize( new Dimension(400,50));
-        medium.setPreferredSize( new Dimension(400, 50));
-        hard.setPreferredSize( new Dimension(400, 50));
+        prompt.setPreferredSize(new Dimension(400, 40));
+        userName.setPreferredSize(new Dimension(400, 40));
+        mode.setPreferredSize(new Dimension(400, 40));
+        ctf.setPreferredSize(new Dimension(400, 40));
+        ffa.setPreferredSize(new Dimension(400, 40));
+        faction.setPreferredSize(new Dimension(400, 50));
+        climate.setPreferredSize(new Dimension(400, 50));
+        temperate.setPreferredSize(new Dimension(400, 40));
+        winter.setPreferredSize(new Dimension(400, 40));
+        desert.setPreferredSize(new Dimension(400, 40));
+        difficulty.setPreferredSize(new Dimension(400, 50));
+        easy.setPreferredSize(new Dimension(400, 50));
+        medium.setPreferredSize(new Dimension(400, 50));
+        hard.setPreferredSize(new Dimension(400, 50));
 
+        ctf.addItemListener(new CheckBoxListener());
+        ffa.addItemListener(new CheckBoxListener());
+        temperate.addItemListener(new CheckBoxListener());
+        winter.addItemListener(new CheckBoxListener());
+        desert.addItemListener(new CheckBoxListener());
+        easy.addItemListener(new CheckBoxListener());
+        medium.addItemListener(new CheckBoxListener());
+        hard.addItemListener(new CheckBoxListener());
 
-        img = new ImageIcon( getClass().getResource("back.png"));
+        img = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\back.png");
         Image temp = img.getImage();
-        temp = temp.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH);
+        temp = temp.getScaledInstance(80, 80, java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(temp);
         back = new JButton(img);
-        back.setBorderPainted( false );
+        back.setBorderPainted(false);
         back.setBounds(30, 30, 75, 75);
 
 
-        imgAnother= new ImageIcon( getClass().getResource("start.png"));
+        imgAnother = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\start.png");
         Image temp1 = img.getImage();
-        temp1 = temp1.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH);
+        temp1 = temp1.getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(temp1);
         play = new JButton(imgAnother);
-        play.setBorderPainted( false );
+        play.setBorderPainted(false);
         play.setBounds(850, 250, 125, 125);
-
 
 
         this.setPreferredSize(new Dimension(1200, 800));
@@ -212,22 +225,23 @@ public class Start extends JPanel implements ActionListener{
 
 
         try {
-            background = ImageIO.read(getClass().getResourceAsStream("maxresdefault.jpg"));
-        } catch (IOException e){
+            file = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\maxresdefault.png");
+            background = new BufferedImage(1024, 768, BufferedImage.TYPE_INT_ARGB);
+            background = ImageIO.read(file);
+            //background = ImageIO.read(getClass().getResourceAsStream("maxresdefault.jpg"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage( background, 0, 0, getWidth(), getHeight(), this);
+        g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 
     }
 
-    private class UserNameListener implements ActionListener
-    {
-        public void actionPerformed(ActionEvent event)
-        {
+    private class UserNameListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
             String text = userName.getText();
         }
 
@@ -239,14 +253,12 @@ public class Start extends JPanel implements ActionListener{
 
     }
 
-    public JButton getButton(String name){
-        if ( name.equals("back") )
-        {
+    public JButton getButton(String name) {
+        if (name.equals("back")) {
 
             return back;
         }
-        if ( name.equals("play") )
-        {
+        if (name.equals("play")) {
 
             return play;
         }
@@ -254,7 +266,23 @@ public class Start extends JPanel implements ActionListener{
         return null;
     }
 
-    private class CheckBoxListener implements ItemListener{
+    public String getModeSelected() {
+        return modeSelected;
+    }
+
+    public String getClimateSelected() {
+        return climateSelected;
+    }
+
+    public String getDifficultySelected() {
+        return difficultySelected;
+    }
+
+    public String getFactionSelected() {
+        return factionSelected;
+    }
+
+    private class CheckBoxListener implements ItemListener {
 
         public void itemStateChanged(ItemEvent event) {
 
@@ -274,23 +302,17 @@ public class Start extends JPanel implements ActionListener{
                 difficultySelected = "medium";
             if (hard.isSelected())
                 difficultySelected = "hard";
-            if(hasFaction.isSelected())
+            if (hasFaction.isSelected())
                 factionSelected = "team";
 
+
         }
+
+
     }
-
-
-
-	/*public static void main( String[] args )
-	  {
-	    JFrame startFrame = new JFrame();
-	    startFrame.add( new Start());
-	    startFrame.setSize(1000, 700);
-	    startFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    startFrame.setResizable(false);
-	    startFrame.setLocationRelativeTo(null);
-	    startFrame.setVisible(true);
-	    startFrame.pack();
-	  }  */
 }
+
+
+
+
+
