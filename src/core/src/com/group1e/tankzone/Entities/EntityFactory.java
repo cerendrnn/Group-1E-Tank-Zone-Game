@@ -39,5 +39,12 @@ public class EntityFactory {
 
         getEngine().addEntity(bullet);
     }
+    
+    public static void createCastle(String faction, String climate, float pos_x, float pos_y, float spawnFrequency) {
+
+        Castle castle = new Castle(faction,climate,pos_x, pos_y, spawnFrequency);
+        getEngine().addEntity(castle);
+    }
+
 
 }
