@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,13 +25,14 @@ public class Help extends JPanel {
     public Help() {
 
         //Back button
-        img = new ImageIcon( getClass().getResource("back.png"));
+        img = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\back.png");
         Image temp = img.getImage();
         temp = temp.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(temp);
         back = new JButton(img);
         back.setBorderPainted( false );
         back.setBounds(20, 20, 50, 50);
+        File f = null;
 
         //Text area
         textArea = new JTextArea();
@@ -54,7 +56,10 @@ public class Help extends JPanel {
         this.add(back);
 
         try {
-            background = ImageIO.read(getClass().getResourceAsStream("help.png"));
+            //background = ImageIO.read(getClass().getResourceAsStream("help.png"));
+            f = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\help.png");
+            background = new BufferedImage(561, 466, BufferedImage.TYPE_INT_ARGB);
+            background = ImageIO.read(f);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -73,8 +78,10 @@ public class Help extends JPanel {
     }
 
     //Get button
-    public JButton getButton() {
+    public JButton getButton(String name) {
+        if(name.equals("back"))
         return back;
+        return null;
     }
 
 }
