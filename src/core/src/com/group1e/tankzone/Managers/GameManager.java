@@ -13,14 +13,11 @@ import com.group1e.tankzone.Systems.AI.TargetClosestStrategy;
 import static com.badlogic.gdx.math.MathUtils.random;
 
 public class GameManager extends ApplicationAdapter {
-    GameType.Climate gameClimate = GameType.Climate.TEMPERATE;
-    GameType.Difficulty gameDifficulty = GameType.Difficulty.EASY;
-    GameType.GameMode gameMode = GameType.GameMode.FFA;
 
     public GameManager(GameType.Climate gameClimate, GameType.Difficulty gameDifficulty, GameType.GameMode gameMode) {
-        this.gameClimate = gameClimate;
-        this.gameDifficulty = gameDifficulty;
-        this.gameMode = gameMode;
+        GameType.climate = gameClimate;
+        GameType.difficulty = gameDifficulty;
+        GameType.gameMode = gameMode;
     }
 
     public int easyInitialTanks = 5;
@@ -59,70 +56,32 @@ public class GameManager extends ApplicationAdapter {
             engine.addEntity(e);
         }
 
-	    if (gameDifficulty == GameType.Difficulty.EASY) {
-            if (gameMode == GameType.GameMode.FFA) {
-                for (int i = 0; i < easyInitialTanks; ++i) {
-                    EntityFactory.createTank(
-                            "red",
-                            random(0, 20) * 20,
-                            random(0, 20) * 20,
-                            random(-20, 20)
-                    );
-                }
-            } else if (gameMode == GameType.GameMode.CTF) {
+        if (GameType.gameMode == GameType.GameMode.CTF) {
 
-                if (gameClimate == GameType.Climate.DESERT)
-                    EntityFactory.createCastle("blue","desert",0,0,0);
-                else if (gameClimate == GameType.Climate.WINTER)
-                    EntityFactory.createCastle("blue","winter",0,0,0);
-                else if (gameClimate == GameType.Climate.TEMPERATE)
-                    EntityFactory.createCastle("blue","temperate",0,0,0);
+            if (GameType.climate == GameType.Climate.DESERT)
+                EntityFactory.createCastle("blue","desert",0,0,0);
+            else if (GameType.climate == GameType.Climate.WINTER)
+                EntityFactory.createCastle("blue","winter",0,0,0);
+            else if (GameType.climate == GameType.Climate.TEMPERATE)
+                EntityFactory.createCastle("blue","temperate",0,0,0);
 
+        } else if (GameType.gameMode == GameType.GameMode.FFA) {
+            int limit;
+            if (GameType.difficulty == GameType.Difficulty.EASY)
+                limit = easyInitialTanks;
+            else if (GameType.difficulty == GameType.Difficulty.MEDIUM)
+                limit = mediumInitialTanks;
+            else
+                limit = hardInitialTanks;
+
+            for (int i = 0; i < limit; ++i) {
+                EntityFactory.createTank(
+                        "red",
+                        random(0, 20) * 20,
+                        random(0, 20) * 20,
+                        random(-20, 20)
+                );
             }
-
-        } else if (gameDifficulty == GameType.Difficulty.MEDIUM) {
-            if (gameMode == GameType.GameMode.FFA) {
-                for (int i = 0; i < mediumInitialTanks; ++i) {
-                    EntityFactory.createTank(
-                            "red",
-                            random(0, 20) * 20,
-                            random(0, 20) * 20,
-                            random(-20, 20)
-                    );
-                }
-            }else if (gameMode == GameType.GameMode.CTF) {
-
-                if (gameClimate == GameType.Climate.DESERT)
-                    EntityFactory.createCastle("blue","desert",0,0,0);
-                else if (gameClimate == GameType.Climate.WINTER)
-                    EntityFactory.createCastle("blue","winter",0,0,0);
-                else if (gameClimate == GameType.Climate.TEMPERATE)
-                    EntityFactory.createCastle("blue","temperate",0,0,0);
-
-            }
-
-        } else if (gameDifficulty == GameType.Difficulty.HARD) {
-            if (gameMode == GameType.GameMode.FFA) {
-                for (int i = 0; i < hardInitialTanks; ++i) {
-                    EntityFactory.createTank(
-                            "red",
-                            random(0, 20) * 20,
-                            random(0, 20) * 20,
-                            random(-20, 20)
-                    );
-                }
-            }
-            else if (gameMode == GameType.GameMode.CTF) {
-
-                if (gameClimate == GameType.Climate.DESERT)
-                    EntityFactory.createCastle("blue","desert",0,0,0);
-                else if (gameClimate == GameType.Climate.WINTER)
-                    EntityFactory.createCastle("blue","winter",0,0,0);
-                else if (gameClimate == GameType.Climate.TEMPERATE)
-                    EntityFactory.createCastle("blue","temperate",0,0,0);
-
-            }
-
         }
     }
 

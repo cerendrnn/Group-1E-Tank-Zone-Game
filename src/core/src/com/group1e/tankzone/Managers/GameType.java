@@ -19,9 +19,9 @@ public class GameType {
         FFA
     }
 
-    public Climate climate;
-    public Difficulty difficulty;
-    public GameMode game_mode;
+    public static Climate climate;
+    public static Difficulty difficulty;
+    public static GameMode gameMode;
 
 
 

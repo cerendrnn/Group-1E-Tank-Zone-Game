@@ -21,7 +21,6 @@ import static com.group1e.tankzone.Managers.MapGenerator.Tile;
 public class GraphicsSystem implements EntitySystem {
     private SpriteBatch batch = new SpriteBatch();
     private OrthographicCamera camera = new OrthographicCamera(1920, 1080);
-    private GameType.Climate climate = GameType.Climate.TEMPERATE;
 
     ObjectMap<Tile, Texture> textureMap = new ObjectMap<Tile, Texture>();
     Texture dirt = new Texture("Map/dirt/mapTile_082.png");
@@ -32,7 +31,7 @@ public class GraphicsSystem implements EntitySystem {
 
     public GraphicsSystem() {
 
-        if (climate == GameType.Climate.WINTER) {
+        if (GameType.climate == GameType.Climate.WINTER) {
             Texture snowTopleft = new Texture("Map/snow/mapTile_061.png");
             Texture snowTop = new Texture("Map/snow/mapTile_062.png");
             Texture snowTopright = new Texture("Map/snow/mapTile_063.png");
@@ -55,7 +54,7 @@ public class GraphicsSystem implements EntitySystem {
             textureMap.put(Tile.GRASS_BOTTOM_RIGHT, snowBottomright);
 
             snow.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.MirroredRepeat);
-        } else if (climate == GameType.Climate.DESERT) {
+        } else if (GameType.climate == GameType.Climate.DESERT) {
 
             Texture sandTopleft = new Texture("Map/sand/mapTile_001.png");
             Texture sandTop = new Texture("Map/sand/mapTile_002.png");
@@ -80,7 +79,7 @@ public class GraphicsSystem implements EntitySystem {
 
             sand.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.MirroredRepeat);
 
-        } else if (climate == GameType.Climate.TEMPERATE) {
+        } else if (GameType.climate == GameType.Climate.TEMPERATE) {
 
             Texture grassTopleft = new Texture("Map/grass/topleft.png");
             Texture grassTop = new Texture("Map/grass/top.png");
@@ -149,11 +148,11 @@ public class GraphicsSystem implements EntitySystem {
 
         batch.begin();
 
-        if (climate == GameType.Climate.TEMPERATE)
+        if (GameType.climate == GameType.Climate.TEMPERATE)
             batch.draw(dirt, 0, 0, 0, 0, width * 32, height * 32);
-        else if (climate == GameType.Climate.WINTER)
+        else if (GameType.climate == GameType.Climate.WINTER)
             batch.draw(snow, 0, 0, 0, 0, width * 32, height * 32);
-        else if (climate == GameType.Climate.DESERT)
+        else if (GameType.climate == GameType.Climate.DESERT)
             batch.draw(sand, 0, 0, 0, 0, width * 32, height * 32);
 
         // Only draw visible parts within the camera
