@@ -2,28 +2,42 @@ package com.group1e.tankzone.Systems;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.group1e.tankzone.Components.*;
 import com.group1e.tankzone.Entities.Entity;
+import com.group1e.tankzone.Entities.EntityFactory;
+import com.group1e.tankzone.Entities.TankBarrel;
 import com.group1e.tankzone.Managers.World;
 import com.group1e.tankzone.Utils.Util;
+import javafx.geometry.Pos;
 
 
 public class InputSystem implements EntitySystem {
     private static final float VELOCITY = 100;
     private static final float ANGULAR_VELOCITY = 100;
+    private static final float BULLET_VELOCITY = 500;
+    private static final float MAX_VELOCITY = VELOCITY * 3;
+
+    private Array<Entity> entitiesWithPlayer = new Array<Entity>();
 
     @Override
-    public void update(World world) {
-        for (Entity entity : world.getEntities()) {
-            PlayerComponent playerComponent = (PlayerComponent)entity.getComponent(PlayerComponent.class);
-            AngleComponent angleComponent = (AngleComponent)entity.getComponent(AngleComponent.class);
-            VelocityComponent velocityComponent = (VelocityComponent)entity.getComponent(VelocityComponent.class);
-            TargetComponent targetComponent = (TargetComponent)entity.getComponent(TargetComponent.class);
+    public void entityUpdated(Entity entity, boolean added) {
+        PlayerComponent playerComponent = entity.getComponent(PlayerComponent.class);
+        if (playerComponent != null) {
+            if (added) entitiesWithPlayer.add(entity);
+            else       entitiesWithPlayer.removeValue(entity, true);
+        }
+    }
 
-            if (playerComponent == null || angleComponent == null)
-                continue;
+    @Override
+    public void update() {
+        for (Entity entity : entitiesWithPlayer) {
+            PlayerComponent playerComponent = entity.getComponent(PlayerComponent.class);
+            AngleComponent angleComponent = entity.getComponent(AngleComponent.class);
+            VelocityComponent velocityComponent = entity.getComponent(VelocityComponent.class);
 
             float deltaTime = Gdx.graphics.getDeltaTime();
 
@@ -45,24 +59,28 @@ public class InputSystem implements EntitySystem {
                     if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                         velocityComponent.velocity -= VELOCITY * deltaTime;
                     }
+                    velocityComponent.velocity = Math.min(MAX_VELOCITY, velocityComponent.velocity);
+
                     break;
                 case ROTATABLE:
-                    float origin_x = Gdx.input.getX();
+                    float mouse_x = Gdx.input.getX();
                     // For some reason LibGDX has different coordinate system for cursor and the game
                     // We have to convert it to the game's version by subtracting it from the height
-                    float origin_y = Gdx.graphics.getHeight() - Gdx.input.getY();
+                    float mouse_y = Gdx.graphics.getHeight() - Gdx.input.getY();
 
-                    float target_x = targetComponent.targetPosition.x;
-                    float target_y = targetComponent.targetPosition.y;
+                    float center_x = Gdx.graphics.getWidth() / 2f;
+                    float center_y = Gdx.graphics.getHeight() / 2f;
 
-                    angleComponent.angle = Util.getAngleBetweenTwoPoints(origin_x, origin_y, target_x, target_y);
+                    angleComponent.angle = Util.getAngleBetweenTwoPoints(mouse_x, mouse_y, center_x, center_y);
+                    TankBarrel barrel = (TankBarrel)entity;
+
+                    if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && barrel.canShoot()) {
+                        EntityFactory.createBullet(barrel, BULLET_VELOCITY);
+                        System.out.println(Gdx.graphics.getFramesPerSecond());
+                    }
+
                     break;
             }
         }
-    }
-
-    @Override
-    public void dispose() {
-
     }
 }
