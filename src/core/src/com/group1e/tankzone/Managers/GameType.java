@@ -3,15 +3,15 @@ package com.group1e.tankzone.Managers;
 public class GameType {
 
     public enum Climate{
-        temperate,
-        winter,
-        desert
+        TEMPERATE,
+        WINTER,
+        DESERT
     }
 
     public enum Difficulty{
-        easy,
-        medium,
-        hard
+        EASY,
+        MEDIUM,
+        HARD
     }
 
     public enum GameMode{

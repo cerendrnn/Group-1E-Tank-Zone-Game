@@ -11,6 +11,6 @@ public class Wormhole extends Entity{
 
           //texture???
           this.addComponent(new DamageComponent(1000, false));
-          this.addComponent(new GraphicsComponent());
+          //this.addComponent(new GraphicsComponent());
     }
 }

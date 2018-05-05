@@ -172,7 +172,7 @@ public class MainMenu {
 
 
     /////////////////////////////////////////////////
-  private  class MyActionListener implements ActionListener {
+  private class MyActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             CardLayout cardLayout = (CardLayout) (cardpanel.getLayout());
             JComponent pressedButton = (JComponent) e.getSource();
@@ -206,17 +206,17 @@ public class MainMenu {
                 mainMenuFrame.dispose();
             } else if (pressedButton == playPanel.getButton("play")) {
                 if (playPanel.getClimateSelected() == "temperate")
-                    gameClimate = GameType.Climate.temperate;
+                    gameClimate = GameType.Climate.TEMPERATE;
                 if (playPanel.getClimateSelected() == "winter")
-                    gameClimate = GameType.Climate.winter;
+                    gameClimate = GameType.Climate.WINTER;
                 if (playPanel.getClimateSelected() == "desert")
-                    gameClimate = GameType.Climate.desert;
+                    gameClimate = GameType.Climate.DESERT;
                 if (playPanel.getDifficultySelected() == "easy")
-                    gameDifficulty = GameType.Difficulty.easy;
+                    gameDifficulty = GameType.Difficulty.EASY;
                 if (playPanel.getDifficultySelected() == "medium")
-                    gameDifficulty = GameType.Difficulty.medium;
+                    gameDifficulty = GameType.Difficulty.MEDIUM;
                 if (playPanel.getDifficultySelected() == "hard")
-                    gameDifficulty = GameType.Difficulty.hard;
+                    gameDifficulty = GameType.Difficulty.HARD;
                 if (playPanel.getModeSelected() == "ctf")
                     gameMode = GameType.GameMode.CTF;
                 if (playPanel.getModeSelected() == "ffa")

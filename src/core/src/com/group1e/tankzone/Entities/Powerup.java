@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.group1e.tankzone.Components.*;
 
 import static com.badlogic.gdx.math.MathUtils.random;
-public class Powerup {
+public class Powerup extends Entity {
 
     public enum Type {
         AMMO_PACK,
