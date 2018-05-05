@@ -9,7 +9,7 @@ public class Castle extends Entity{
 
     public Castle(String faction, String climate, float pos_x, float pos_y,float spawnfrequency){
 
-        Texture texture = new Texture("castle_" + climate + ".png");
+        Texture texture = new Texture("Map/castles/"+ climate + ".png");
         this.addComponent(new PositionComponent(pos_x, pos_y));
         this.addComponent(new GraphicsComponent(texture));
         this.addComponent(new SizeComponent(500));
