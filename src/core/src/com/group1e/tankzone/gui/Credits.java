@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import java.io.File;
 
 public class Credits extends JPanel {
 
@@ -23,11 +24,14 @@ public class Credits extends JPanel {
     JButton back;
     JLabel credit;
     Font font;
+    File f = null;
+
 
     public Credits() {
 
         //Back button
-        img = new ImageIcon(getClass().getResource("back.png"));
+        img = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\back.png");
+
         Image temp = img.getImage();
         temp = temp.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(temp);
@@ -36,7 +40,10 @@ public class Credits extends JPanel {
         back.setBounds(20, 20, 50, 50);
 
         try {
-            background = ImageIO.read(getClass().getResourceAsStream("thismeanswar.png"));
+            f = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\thismeanswar.png");
+            background = new BufferedImage(561, 466, BufferedImage.TYPE_INT_ARGB);
+            background = ImageIO.read(f);
+            //background = ImageIO.read(getClass().getResourceAsStream("thismeanswar.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,8 +52,8 @@ public class Credits extends JPanel {
         //Text area
         text = new JTextArea();
 
-        text.setText("\n\n CREDITS" + "\n\n AybÃ¼ke Ceren DURAN"
-                + "\n\n Hakan TÃœRKMENOÄžLU"
+        text.setText("\n\n CREDITS" + "\n\n Aybuke Ceren DURAN"
+                + "\n\n Hakan TURKMENOGLU"
                 + "\n\n Mert SEZER");
 
         text.setBorder(new LineBorder(Color.BLACK, 3));
@@ -76,9 +83,11 @@ public class Credits extends JPanel {
 
     //Get button
     public JButton getButton() {
-        return back;
+
+            return back;
+
     }
-    public static void main( String[] args )
+    /*public static void main( String[] args )
 	  {
 	    JFrame creditsFrame = new JFrame();
 	    creditsFrame.add( new Credits());
@@ -88,5 +97,5 @@ public class Credits extends JPanel {
 	    creditsFrame.setLocationRelativeTo(null);
 	    creditsFrame.setVisible(true);
 	    creditsFrame.pack();
-	  }
+	  }*/
 }
