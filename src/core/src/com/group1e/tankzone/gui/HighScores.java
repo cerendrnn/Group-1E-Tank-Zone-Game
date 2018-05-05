@@ -19,11 +19,12 @@ public class HighScores extends JPanel {
     ImageIcon img = null;
     JButton back;
     Font font;
+    File f = null;
 
 
     public HighScores(){
         //Back button
-        img = new ImageIcon( getClass().getResource("back.png"));
+        img = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\back.png");
         Image temp = img.getImage();
         temp = temp.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(temp);
@@ -32,7 +33,9 @@ public class HighScores extends JPanel {
         back.setBounds(20, 20, 50, 50);
 
         try {
-            background = ImageIO.read(getClass().getResourceAsStream("highscores.jpg"));
+            f = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\highscores.png");
+            background = new BufferedImage(574, 366, BufferedImage.TYPE_INT_ARGB);
+            background = ImageIO.read(f);
         } catch (IOException e){
             e.printStackTrace();
         }
