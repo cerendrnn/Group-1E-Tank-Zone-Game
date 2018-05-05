@@ -22,12 +22,13 @@ public class Settings extends JPanel {
     ImageIcon img = null;
     JButton back;
     Font font;
+    File f = null;
 
 
 
     public Settings(){
         //Back button
-        img = new ImageIcon( getClass().getResource("back.png"));
+        img = new ImageIcon("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\back.png");
         Image temp = img.getImage();
         temp = temp.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         img = new ImageIcon(temp);
@@ -38,7 +39,9 @@ public class Settings extends JPanel {
 
 
         try {
-            background = ImageIO.read(getClass().getResourceAsStream("settings1.jpg"));
+            f = new File("C:\\Users\\Ceren\\IdeaProjects\\Group-1E-Tank-Zone-Game\\src\\desktop\\assets\\settings1.png");
+            background = new BufferedImage(627, 626, BufferedImage.TYPE_INT_ARGB);
+            background = ImageIO.read(f);
         } catch (IOException e){
             e.printStackTrace();
         }
